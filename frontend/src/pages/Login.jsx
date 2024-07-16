@@ -3,8 +3,28 @@ import ImageForLoginSignup from '../images/background-image/bg-img-loginform.jpg
 import FaceBookIcon from '../images/icons/facebook.png';
 import GoogleIcon from '../images/icons/google.png';
 
+import { useAuth } from "../AuthContext";
+import { useNavigate } from "react-router-dom";
+
+import LoginData from "../assets/LoginStateData/LoginData";
+
 function Login() {
     // Add functions for dynamic actions here
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const { login, userInfo } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogin = async () => {
+        // Fetch later
+        for (let i = 0; i < LoginData.length; i++){
+            if (username === LoginData[i].username && password === LoginData[i].password) {                    
+                await login(LoginData[i].fullname);
+                break;
+            }
+        }
+        navigate("/estate-for-sale");
+    };
 
     // Return UI for Login page here
     return (
@@ -36,6 +56,8 @@ function Login() {
                             type="text" 
                             placeholder="  Tên người dùng ..."
                             className="w-full h-full rounded-lg border border-black-500"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                         />
                     </div>
                 </div>
@@ -49,9 +71,11 @@ function Login() {
                         <input 
                             id="password-login"
                             name="password-login"
-                            type="text" 
+                            type="password" 
                             placeholder="  Mật khẩu ..."
                             className="w-full h-full rounded-lg border border-black-500"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
                 </div>
@@ -70,7 +94,10 @@ function Login() {
                     >Quên mật khẩu?</label>
                 </div>
                 <div className="flex h-10 justify-center"> {/* Login button here */}
-                    <button className="w-4/5 bg-red-500 text-white font-bold italic rounded-lg">
+                    <button 
+                        className="w-4/5 bg-red-500 text-white font-bold italic rounded-lg"
+                        onClick={handleLogin}
+                    >
                         ĐĂNG NHẬP
                     </button>
                 </div>                    

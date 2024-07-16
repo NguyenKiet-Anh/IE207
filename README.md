@@ -64,7 +64,7 @@ In this project, we try to create a end-to-end website for displaying house's pr
           PostgreSQL
         </li>
         <li>
-          Django
+          Django/ Fast API
         </li>
         <li>
           ReactJs

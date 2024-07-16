@@ -1,0 +1,234 @@
+Ý tưởng hoạt động: home -> đăng nhập/ đăng ký -> home -> các trang khác
+
+* Design figma -> deadline 15/7/2024
+
+trang chủ: -> áp dụng hệ khuyến nghị ở đây
+	- navigation (từ trái sang phải):
+		+ Logo
+		+ Nhà đất bán. -> dùng chung trang home
+		+ Nhà đất cho thuê. -> dùng chung trang home
+		+ Phân tích kỹ thuật: các biểu đồ đánh giá - dashboard -> chuyển trang khác
+		+ Tin tức. -> chuyển trang khác
+		+ Đăng tin (sau đăng nhập thì hiển thị)
+		+ Đăng nhập/ đăng xuất -> đăng nhập vào thì được đăng tin rao bán/ thuê -> đăng nhập vào thì có thêm nút
+		+ Nguyên thanh ngang - nằm ngay dưới thanh navigator:
+			. Tìm kiếm -> enter là tìm
+			. Filter: loại nhà, loại phòng; khu vực (quận); mức giá; diện tích 
+			. Nút đặt lại filter về mặc định
+	- nhà bán xu hướng: cuộn ngang
+	- chia hai cột thông tin:
+	* cột 1:
+		- Breadcrumb + số lượng hiển thị trên tổng số
+		- Ứng mỗi filter hiển thị các thông tin nhà đất cụ thể:
+			+ hình ảnh + thể hiện tổng số hình ảnh
+			+ title căn hộ
+			+ địa chỉ (quận, thành phố)
+			+ diện tích
+			+ số phòng ngủ, số phòng vệ sinh
+			+ giá
+			+ thời gian đăng tin
+			+ thông tin người đăng
+			+ tùy chọn thêm yêu thích
+		- Số lượng trang và chuyển trang
+	* cột 2:
+		- quảng cáo
+		- tin tức (tóm gọn)
+		- diễn đàn (hiện các chủ đề topic) - đăng nhập để đăng bài và bình luận
+	- footer: 
+	          2 hàng
+		* hàng 1: 
+		4 cột
+		+ cột 1: logo + số điện thoại + email + liên kết mạng xã hội
+		+ cột 2: hướng dẫn
+		+ cột 3: qui định
+		+ cột 4: bản đồ nơi tổ chức tọa lạc
+		* hàng 2: đăng ký nhận tin, đóng góp/ phản hồi cho trang
+trang chi tiết bđs:
+	** 2 cột
+	> cột 1
+	* giữ nguyên navigation (bỏ cái filter ra)
+	- breadcrumb
+	- hình ảnh (cho phép cuộn)
+	- title
+	- địa chỉ cụ thể
+	- giá
+	- thông tin chính:
+		+ diện tích
+		+ pháp lý
+		+ ngày đăng
+		+ số phòng ngủ
+		+ số phòng wc
+		+ 
+	- giới thiệu (nếu có thì để thông tin)
+	- bản đồ
+	- các bđs tương tự 
+	> cột 2:
+	- thông tin tài khoản người đăng: tên + ngày tham gia + số bất động sản đã đăng
+	- số điện thoại
+	- nút lưu tin + nút gửi tin nhắn (via: messenger, zalo, ... khi hover nút sẽ sổ xuống để chọn)
+- trang đăng nhập & đăng xuất: cho phép liên kết tài khoản google & facebook & zalo
+- trang phân tích kỹ thuật -> tích hợp dự đoán giá nhà linear regression -> dự đoán khu vực giá cao nhất -> dự đoán ...
+	+ top 2 thị trường (quận) sôi đọng nhất theo quí
+	+ biểu đồ biến động giá theo thời gian:
+		. quận 
+		. bán hoặc cho thuê
+	+ so sánh các quận biểu đồ giá
+	+ bản đồ cheropleth theo giá thuê/ bán
+	+ bản đồ vị trí cho các bất động sản theo bán/ thuê
+- trang tin tức:
+	+ breadcrumb  + tìm kiếm
+	2 cột
+		> cột 1: tin tức chung - theo ngày đăng
+		> cột 2: tin tức được xem nhiều nhất
+- trang quản lý tài khoản (đối với người đăng - đăng nhập vào mới có) -> TRANG NÀY LÀM SAO
+	- thông tin môi giới: họ tên, địa chỉ
+	- số điện thoại
+	- email
+	- tham gia ngày
+	- loại thành viên: môi giới hoặc 
+	> thiết kế trang đăng ký để đăng tin:
+		phí dự kiến: ???
+- trang home: nếu đăng nhập thì có các tín năng: nhận tin + khuyến nghị
+
+trang đăng nhập: -> dạng popup
+- 1 thanh navbar ở trên
+- 1 section ở giữa:
+	- chia 2 cột
+	* cột 1: hình nền
+	* cột 2:
+	+ Login Form
+	+ 'Welcom back!'
+	+ Tên người dùng: label + input text field
+	+ Mật khẩu: label + input text field (hidden password)
+	+ Nhớ mật khẩu
+	+ Nút đăng nhập
+- 1 thanh footer ở dưới
+
+trang đăng ký: -> dạng popup 
+- 1 thanh navbar ở trên
+- 1 section ở giữa:
+	- chia 2 cột:
+	* cột 1: hình nền
+	* cột 2:
+	+ SignUp Form
+	+ Tên người dùng
+	+ Mật khẩu
+	+ Nhập lại mật khẩu
+	+ Số điện thoại
+	+ Email
+- 1 thanh footer ở dưới
+
+cuộn quản lý tài khoản:
+- Tổng quan:
+	Thông tin thống kê:
+		- Card:
+			+ tổng số khách hàng & thêm mới hôm nay
+			+ số tin đăng & thêm mới trong hôm nay
+			+ số dư tài khoản
+		- biểu đồ chart lịch sử hoạt động (4 tháng gần nhất): đăng tin, thêm liên hệ, nạp số dư
+		- biểu đồ thống kê số tin đăng theo loại nhà == chức năng nâng cao (nlp) -> phân loại nhà thống kê (biểu đồ chart cho số nhà + line plot cho giá trung bình)
+
+- Tin đăng -> xem danh sách tin đăng (card: trên card hiện tiêu đề (title) tin đăng) + chức năng đăng tin (nút bấm -> bấm vào chuyển tab)
+	các thông tin cần hiển thị: mỗi mục là 1 card để ghi các thông tin liên quan
+	. Thông tin cơ bản
+		+ toggle button 'Bán' hoặc 'Cho thuê'
+		+ Loại bất động sản thiết kế select box
+		+ Thành phố: mặc định là 'Thành phố Hồ Chí Minh'
+		+ Quận: select box
+		+ Phường: select box
+		+ Đường, Khu phố: select box
+		+ Bổ sung đầy đủ địa chỉ tin đăng của bất động sản: text field
+	. Thông tin bài đăng:
+		+ Tiêu đề
+		+ Mô tả
+	. Thông tin bất động sản:
+		+ Diện tích
+		+ Số phòng ngủ
+		+ Số nhà vệ sinh
+		+ Mức giá
+	. Hình ảnh:
+		+ Upload hình ảnh (ít nhất 4 ảnh)
+	. Thông tin liên hệ:
+		+ Tên liên hệ
+		+ Số điện thoại
+		+ Email
+	Nút nhấn đăng tin
+- Liên hệ:	
+	phân hai loại - 2 danh mục card theo 2 hàng khác nhau mỗi breadcrumb từng hàng hiện đủ thông tin về tổng số liên hệ
+	+ Cò khác
+	+ khách hàng
+
+- Popup thông tin cá nhân:
+	+ 
+	+ 
+	+ 
+* frontend: -> deadline 31/7
+	
+* django + model -> deadline 25/8/2024
+* build recommender system -> 15/9/2024
+
+month 9 -> mid month 11: learn java and spring boot + build a website for 3D + build an desktop app for cpm electron.js
+
+techstack:
+- frontend: html, css, tailwind css, chart.js, react.js, stripe
+- backend: django reastful api, mongodb
+- server: heroku/ vercel ???
+- data analysis + manipulating: spark/ pandas
+- predictive system: spark mllib, sklearn -> dự đoán giá nhà trong từng khu vực (trang phân tích) & dự đoán giá nhà theo tháng (trang phân tích) & hỗ trợ ra quyết định giá nhà bán (trong popup 'Đăng tin')
+- recommender system: spark mllib/ sklearn -> khuyến nghị mua nhà theo các nhà liên quan (trang EstateForSale & EstateForRent)
+- deeplearning 
+	+ nlp: sparknlb/ pytorch -> có thể là phân loại nhà theo tiêu đề + mô tả () / làm hệ khuyến nghị -> dễ hơn opencv 
+	+ cv: tensorflow/ opencv -> 
+		- dự đoán giá nhà thông qua hình ảnh cung cấp (dùng trong popup 'Đăng tin') -> gắn nhãn tay
+		- đánh giá chất lượng phòng
+
+solution: 1920x1080
+
+all tools:
+- web: python (django + flask + streamlit) + js (react)+ css (tailwind css) + html
+- data engineer: mssql (SSIS + SSAS + SSRS) + postgresql + mongodb + python (kafka + spark/ pandas)
+- machine learning: sklearn + spark mllib + tensorflow
+- report: power bi
+
+
+
+
+
+
+
+
+
+
+hè làm hai web: một bất động sản + một là web hệ thống thông tin địa lý 3 chiều
+nắm chắc stack:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		

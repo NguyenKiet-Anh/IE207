@@ -10,7 +10,7 @@ const NewsList = (props) => {
             </div>
             <div className="w-2/3">
                 <div className="ml-3">
-                    <p className="py-2">{props.timestamp} - {props.author}</p>
+                    <p className="py-2 text-sm italic">{props.timestamp} - {props.author}</p>
                     <p className="font-bold text-xl py-5">{props.title}</p>
                     <p className="py-3">{props.content}</p>
                 </div>

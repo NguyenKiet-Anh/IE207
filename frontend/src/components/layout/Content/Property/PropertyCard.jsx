@@ -2,19 +2,20 @@ import AddFavouriteIcon from '../../../../images/icons/add-favourite.png';
 import BedRoomIcon from '../../../../images/icons/bed.png';
 import BathRoomIcon from '../../../../images/icons/bath.png';
 import PhoneIcon from '../../../../images/icons/smartphone.png';
+import Acreageicon from '../../../../images/icons/acreage.png';
 
 const PropertyCard = (props) => {
     return (
-        <div className="flex flex-wrap items-center">
+        <div className="flex flex-wrap rounded-3xl my-6 hover:bg-slate-200">
             <div className="w-1/3">
                 <img 
                     src={props.img}
                     alt="Hình nhà - 1 hình" 
-                    className='rounded rounded-3xl'    
+                    className='h-full rounded-r rounded-3xl'
                 />
             </div>
             <div className="w-2/3 pl-1">
-                <div className="flex flex-wrap items-center mb-2">
+                <div className="flex flex-wrap items-center my-3">
                     <p className='w-3/6 font-bold text-xl'>{props.title}</p>
                     <p className='w-2/6 font-bold text-lg text-red-500 text-center'>{props.price}</p>
                     <button className='w-1/6 flex justify-center'>
@@ -25,30 +26,40 @@ const PropertyCard = (props) => {
                         />
                     </button>
                 </div>
-                <p className='mx-2 text-lg'>{props.address}</p>
-                <div className="flex items-center gap-5 m-4">
-                    <p className='font-bold text-red-500 text-lg lg:text-xl'>{props.area} m^2</p>                    
+
+                <p className='mx-2 my-2 lg:my-5 text-lg italic'>{props.address}</p>
+
+                <div className="flex items-center gap-5 lg:gap-16 mx-4 my-3">
+                    <div className='flex gap-1 lg:gap-2 items-center justify-start rounded rounded-2xl'>
+                        <img 
+                            src={Acreageicon} 
+                            alt="Icon cho diện tích" 
+                            className='lg:h-8'
+                        />
+                        <p className='font-bold text-red-400 text-lg lg:text-xl'>{props.area}</p>                    
+                    </div>                    
                     
-                    <div className='flex gap-2 py-2 px-4 bg-gray-300 rounded rounded-2xl'>
+                    <div className='flex gap-1 lg:gap-2 items-center justify-start rounded rounded-2xl'>
                         <img 
                             src={BedRoomIcon} 
                             alt="Icon phòng ngủ" 
-                            className='h-6'
+                            className='h-6 lg:h-8'
                         />
-                        <p className='font-bold'>{props.bedroom} Phòng ngủ</p>
+                        <p className='text-lg'>{props.bedroom}</p>
                     </div>
 
-                    <div className='flex gap-2 py-2 px-4 bg-gray-300 rounded rounded-2xl'>
+                    <div className='flex gap-1 lg:gap-2 items-center justify-start rounded rounded-2xl'>
                         <img 
                             src={BathRoomIcon} 
                             alt="Icon phòng tắm" 
-                            className='h-6'
+                            className='h-6 lg:h-8'
                         />
-                        <p className='font-bold'>{props.bathroom} Phòng tắm</p>
+                        <p className='lg:text-lg'>{props.bathroom}</p>
                     </div>
                 </div>
-                <div className="flex lg:pt-12">
-                    <div className='w-2/5 flex'>
+                
+                <div className="flex">
+                    <div className='w-2/5 flex pr-8'>
                         <div className='w-1/3 my-1'>
                             <img 
                             src={props.author_img}
@@ -57,9 +68,9 @@ const PropertyCard = (props) => {
                         />
                         </div>
 
-                        <div className='w-2/3 block'>
-                            <p className='font-bold mt-2 mb-10'>{props.author_name}</p>
-                            <p>{props.date}</p>
+                        <div className='w-2/3 flex flex-wrap lg:ml-1'>
+                            <p className='font-bold my-2'>{props.author_name}</p>
+                            <p className='italic'>{props.date}</p>
                         </div>
                     </div> 
 
@@ -76,7 +87,7 @@ const PropertyCard = (props) => {
                         </div>
                     </button>
 
-                    <div className='flex w-1/5 justify-center items-center'>                     
+                    <div className='flex w-2/5 sm:w-1/5 items-center md:px-1 lg:px-3'>                     
                         <a href="" className='text-red-500 font-bold underline'>
                             <p>Xem chi tiết &gt;</p>
                         </a>

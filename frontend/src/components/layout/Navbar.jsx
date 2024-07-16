@@ -20,7 +20,11 @@ function Navbar() {
             <div className="pb-5">
                 <ul className="grid grid-cols-10 gap-2 h-20">
                     <li className="flex items-center justify-center font-bold"> 
-                        <img src={LogoImage} alt="Logo trang web" />
+                        <NavLink
+                            to="/home"
+                        >
+                            <img src={LogoImage} alt="Logo trang web" />
+                        </NavLink>                        
                     </li>
 
                     <li className="flex items-center justify-center font-bold">
@@ -123,7 +127,7 @@ function Navbar() {
                             >   {/* Login */}
                                 <button 
                                     className="flex justify-center bg-red-500 rounded rounded-2xl hover:bg-black">
-                                    <p className="text-white py-3 md:px-4">Đăng nhập</p>
+                                    <p className="text-white py-3 md:py-3 md:px-4">Đăng nhập</p>
                                 </button>
                             </NavLink>
                             </>

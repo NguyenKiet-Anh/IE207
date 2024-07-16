@@ -1,5 +1,6 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
 import EstateForSale from './pages/EstateForSale';
 import EstateForRent from './pages/EstateForRent';
 import News from './pages/News';
@@ -17,7 +18,9 @@ function App() {
       <BrowserRouter>
       <AuthProvider>
         <Navbar />
-          <Routes>          
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/home" element={<Home />} />
             <Route path="/estate-for-sale" element={<EstateForSale />} />
             <Route path="/estate-for-rent" element={<EstateForRent />} />
             <Route path="/analysis-page" element={<AnalysisPage />} />

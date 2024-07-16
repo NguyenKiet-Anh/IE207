@@ -1,0 +1,262 @@
+Mô hình phát triên: Odoo
+
+* Design figma -> deadline 15/7/2024
+> trang home:
+	+ Hàng 1:
+		. 1 hình cuộn ngang
+		. 1 filter riêng cho trang này:
+			- hai tab: nhà đất bán và nhà đất cho thuê
+			- 1 thành tìm kiếm
+			- ô filter: 
+				. loại nhà đất: combobox - nhiều lựa chọn sổ xuống thì cho tích chọn
+				. quận - tương tự loại nhà đất
+				. mức giá - 2 hàng: hàng 1 là khoảng giá, hàng 2 là khoảng giá đề xuất
+	+ Hàng 2: Tin tức tóm gọn
+		. 1 khu vực đăng bài mới nhất - chỉ hình & tiêu đề & ngày đăng -> tự động chuyển tin
+		. Một cột các tiêu đề
+		. một nút xem tất cả
+	+ Hàng 3: bất động sản bán theo trend (hot) -> phân lớp nhà hot (multiclass classification) -> thanh cuộn ngang các nhà hot
+	+ Hàng 4: tiện ích:
+		. Tính giá đề nghị (price prediction)
+		. Tính lãi suất (functional programing)
+		. Nhà gần trường (nlp)
+> hai trang bán và cho thuê:
+	- navigation (từ trái sang phải):
+		+ Logo
+		+ Nhà đất bán. -> dùng chung trang home
+		+ Nhà đất cho thuê. -> dùng chung trang home
+		+ Phân tích kỹ thuật: các biểu đồ đánh giá - dashboard -> chuyển trang khác
+		+ Tin tức. -> chuyển trang khác
+		+ Đăng tin (sau đăng nhập thì hiển thị)
+		+ Đăng nhập/ đăng xuất -> đăng nhập vào thì được đăng tin rao bán/ thuê -> đăng nhập vào thì có thêm nút
+		+ Nguyên thanh ngang - nằm ngay dưới thanh navigator:
+			. Tìm kiếm -> enter là tìm
+			. Filter: loại nhà, khu vực (quận); mức giá; diện tích 
+			. Nút đặt lại filter về mặc định
+	- nhà bán xu hướng: xây dựng hệ thống machine learning tự xác định tin bào nào là hot -> tin hot thì về sau sẽ gắn nhãn 'HOT'
+	- chia hai cột thông tin: tỷ lệ cột lần lượt là 2/3 và 1/3
+	* cột 1:
+		- Breadcrumb + số lượng hiển thị trên tổng số
+		- Ứng mỗi filter hiển thị các thông tin nhà đất cụ thể:
+			+ hình ảnh + thể hiện tổng số hình ảnh
+			+ title căn hộ
+			+ địa chỉ (quận, thành phố)
+			+ diện tích
+			+ số phòng ngủ, số phòng vệ sinh
+			+ giá
+			+ thời gian đăng tin
+			+ thông tin người đăng
+			+ tùy chọn thêm yêu thích
+		- Số lượng trang và chuyển trang
+	* cột 2:
+		- bản dồ vị trí nhà
+		- tin tức (tóm gọn)
+	- footer: 
+	          2 hàng
+		* hàng 1: 
+		4 cột
+		+ cột 1: logo + số điện thoại + email + liên kết mạng xã hội
+		+ cột 2: hướng dẫn
+		+ cột 3: qui định
+		+ cột 4: bản đồ nơi tổ chức tọa lạc
+		* hàng 2: đăng ký nhận tin, đóng góp/ phản hồi cho trang
+> trang chi tiết bđs:
+	2 hàng
+	> Hàng 1
+	** 2 cột: tỷ lệ 1/2 và 1/2
+	> cột 1
+	- breadcrumb
+	- Hình ảnh (cho phép đổi ảnh)
+	- Địa chỉ
+	- Giá
+	- Tiêu đề
+	- Mô tả
+	- Người đăng + ngày đăng
+	> cột 2:
+	- Thông tin pháp lý:
+		+ Chính chủ
+		+ Sổ hồng/ đỏ
+	- Thông tin diện tích + phòng:
+		+ Diện tích
+		+ Số phòng ngủ
+		+ Số phòng tắm
+	- Tiện ích khác
+	- Bản đồ
+	> Hàng 2
+	- Các bđs tương tự -> áp dụng hệ khuyến nghị (khuyến nghị nhà liên quan dựa trên các nhà có thông tin tương tự với nhà mà khách đang xem)
+> trang đăng nhập & đăng xuất: cho phép liên kết tài khoản google & facebook & zalo
+> trang phân tích kỹ thuật -> tích hợp dự đoán giá nhà linear regression -> dự đoán khu vực giá cao nhất -> dự đoán ...
+	+ top 2 thị trường (quận) sôi đọng nhất theo quí
+	+ biểu đồ biến động giá theo thời gian:
+		. quận 
+		. bán hoặc cho thuê
+	+ so sánh các quận biểu đồ giá
+	+ bản đồ cheropleth theo giá thuê/ bán
+	+ bản đồ vị trí cho các bất động sản theo bán/ thuê
+> trang tin tức:
+	+ Giới thiệu  + tìm kiếm
+	2 cột
+		> cột 1: tin tức chung - theo ngày đăng
+		> cột 2: tin tức được xem nhiều nhất
+> trang quản lý tài khoản (đối với người đăng - đăng nhập vào mới có) -> TRANG NÀY LÀM SAO
+	- thông tin môi giới: họ tên, địa chỉ
+	- số điện thoại
+	- email
+	- tham gia ngày
+	- loại thành viên: môi giới hoặc 
+	> thiết kế trang đăng ký để đăng tin:
+		phí dự kiến: ???
+> trang đăng nhập: -> dạng cửa sổ nhỏ
+- 1 thanh navbar ở trên
+- 1 section ở giữa:
+	- chia 2 cột
+	* cột 1: hình nền
+	* cột 2:
+	+ Login Form
+	+ 'Welcom back!'
+	+ Tên người dùng: label + input text field
+	+ Mật khẩu: label + input text field (hidden password)
+	+ Nhớ mật khẩu
+	+ Nút đăng nhập
+- 1 thanh footer ở dưới
+> trang đăng ký: -> dạng cửa sổ nhỏ
+- 1 thanh navbar ở trên
+- 1 section ở giữa:
+	- chia 2 cột:
+	* cột 1: hình nền
+	* cột 2:
+	+ SignUp Form
+	+ Tên người dùng
+	+ Mật khẩu
+	+ Nhập lại mật khẩu
+	+ Số điện thoại
+	+ Email
+- 1 thanh footer ở dưới
+> Cuộn quản lý tài khoản:
+- Tổng quan:
+	Thông tin thống kê:
+		- Card:
+			+ tổng số khách hàng & thêm mới hôm nay
+			+ số tin đăng & thêm mới trong hôm nay
+			+ số dư tài khoản
+		- biểu đồ chart lịch sử hoạt động (4 tháng gần nhất): đăng tin, thêm liên hệ, nạp số dư
+		- biểu đồ thống kê số tin đăng theo loại nhà == chức năng nâng cao (nlp) -> phân loại nhà thống kê theo tiêu đề & mô tả (biểu đồ chart cho số nhà + line plot cho giá trung bình)
+
+- Tin đăng -> xem danh sách tin đăng (card: trên card hiện tiêu đề (title) tin đăng) + chức năng đăng tin (nút bấm -> bấm vào chuyển tab)
+	các thông tin cần hiển thị: mỗi mục là 1 card để ghi các thông tin liên quan
+	. Thông tin cơ bản
+		+ toggle button 'Bán' hoặc 'Cho thuê'
+		+ Loại bất động sản thiết kế select box
+		+ Thành phố: mặc định là 'Thành phố Hồ Chí Minh'
+		+ Quận: select box
+		+ Phường: select box
+		+ Đường, Khu phố: select box
+		+ Bổ sung đầy đủ địa chỉ tin đăng của bất động sản: text field
+	. Thông tin bài đăng:
+		+ Tiêu đề
+		+ Mô tả
+	. Thông tin bất động sản:
+		+ Diện tích
+		+ Số phòng ngủ
+		+ Số nhà vệ sinh
+		+ Mức giá
+	. Hình ảnh:
+		+ Upload hình ảnh (ít nhất 4 ảnh)
+	. Thông tin liên hệ:
+		+ Tên liên hệ
+		+ Số điện thoại
+		+ Email
+	Nút nhấn đăng tin
+
+- Liên hệ:	
+	phân hai loại - 2 danh mục card theo 2 hàng khác nhau mỗi breadcrumb từng hàng hiện đủ thông tin về tổng số liên hệ
+	+ Cò khác
+	+ khách hàng
+
+- Popup thông tin cá nhân + popup đổi mật khẩu
+
+solution: 1920x1080
+
+* frontend: html, css, tailwind css, chartjs, reactjs-> deadline 25/7
+	Các chức năng chính:
+		- Đăng nhập: đăng nhập vào tài khoản, khôi phục mật khẩu, đăng nhập với facebook/ goole
+		- Đăng ký: đăng ký tài khoản mới, xác nhận email/ số điện thoại
+		- Xác thực người dùng: phân quyền, xác minh danh tính
+		- Nhập thông tin: tìm kiếm/ nhập các thông tin người dùng/ nhập thông tin cho các bài đăng (dành cho tài khoản là hội viên)/ đăng tin tức (dành cho tài khoản là hội viên)/ ...
+		- Chọn xem: filter/ chọn xem nhà/ chọn xem thông tin người đăng/ chọn chuyển trang/ ...
+		- Chức năng thanh toán: đối với tài khoản muốn nâng cấp lên hội viên
+		- Các chức năng quản lý: tin đăng/ tin tức đăng
+		- Các chức năng biểu đồ thống kê (chủ yếu việc thống kê là functional programing)
+		- Các chức năng dự đoán, phân loại và khuyến nghị: machine learning và deeplearning
+		- Chức năng định vị, bản đồ
+		- Chức năng đa phương tiện
+		- Chức năng chat
+
+* database: postgreSQL -> deadline 20/8
+	- Cào về + dataset từ môn IE214 + tham khảo từ thiết kế giao diện mà thiết kế lại -> làm database quan hệ -> được thì xây dựng kiểu OLTP
+	- Thiết kế cho phù hợp với front end
+
+* django + model -> deadline 15/8/2024
+	- Xây API từ các chức năng chính của front end
+
+* build recommender system -> 25/9/2024
+	
+techstack:
+- frontend: html, css, tailwind css, chart.js, react.js, stripe -> không giải thích
+- backend: django reastful api, postgreSQL -> Web lớn nên dùng Django, web thương mại dùng PostgreSQL
+- server: render.com/ vercel -> một trong hai đều được
+- data analysis + manipulating: spark
+- predictive system: spark mllib, sklearn -> dự đoán cái gì ghi ở trên thiết kế
+- recommender system: spark mllib/ sklearn -> khuyến nghị cái gì ghi ở trên thiết kế
+- deeplearning
+	+ nlp: sparknlb/ pytorch -> có thể là phân loại nhà theo tiêu đề + mô tả () / làm hệ khuyến nghị -> có thể ra mắt trong các version sau
+	+ cv: tensorflow/ opencv -> NÂNG CAO có thể sẽ có trong các version sau
+		- dự đoán giá nhà thông qua hình ảnh cung cấp (dùng trong popup 'Đăng tin') -> gắn nhãn tay
+		- đánh giá chất lượng phòng
+- testing: jwt
+- sendmail: smtplib
+
+
+
+
+
+
+
+
+
+
+
+
+hè làm hai web: một bất động sản + một là web hệ thống thông tin địa lý 3 chiều
+nắm chắc stack:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		

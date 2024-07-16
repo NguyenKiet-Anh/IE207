@@ -1,0 +1,224 @@
+- Một số quy tắc chung:
+	+ Ngôn ngữ: Tiếng Việt không dấu.
+
+	+ Các khóa chính sử dụng kiểu dữ liệu `serial` (tối ưu truy vấn, tìm kiếm và không gian lưu trữ). Nếu muốn quản lý dạng chuỗi thì khi làm Front-End sẽ encode lại (VD: khóa đầu tiên là `1` thì bưng lên Front-End 
+sẽ show là `TK_000001` hoặc đại loại như vậy).
+
+	+ Đặt tên ràng buộc theo quy tắc:
+		* Khóa chính: pk_(tên bảng) VD: pk_tai_khoan
+		* Khóa ngoại: fk_(tên bảng hiện tại)_to_(tên bảng tham chiếu) VD: fk_tai_khoan_to_loai_tk
+
+	+ Sử dụng dấu gạch chân để phân tách các từ VD: TAI_KHOAN
+
+
+--------------------************** Ý tưởng xây dựng database (dựa trên giao diện Figma) **************--------------------
+
+- Bảng LOAI_TK -- Phân loại tài khoản + Phân quyền
++ maloai smallserial NOT NULL,					-- Mã loại (`smallserial` khóa chính tự động tăng dần khi insert row từ 1 đến 32767)
++ tenloai varchar(10) NOT NULL,					-- Tên loại tài khoản (vừa phân loại + phân quyền luôn): Gồm 5 loại (admin - premium - standard - basic - new)
++ qtv boolean NOT NULL,						-- Quyền quản trị: True (là admin) - False (là mấy thằng user đã đăng ký tài khoản chứ k phải user vãng lai)
++ CONSTRAINT pk_loai_tk PRIMARY KEY (maloai)			-- Khóa chính: Mã loại
+
+- Bảng TAI_KHOAN -- Chứa đầy đủ thông tin của tài khoản 
++ matk serial NOT NULL,						-- Mã tài khoản giống Mã loại ở trên nhưng tăng dần từ 1 - 2147483647 (vừa là mã để phân biệt tài khoản vùa là mã của 
+								-- tài khoản định danh luôn)
++ tendangnhap varchar(50) NOT NULL UNIQUE,			-- Tên đăng nhập phải UNIQUE vì làm gì có chuyện tên đăng nhập trùng nhau. (không cho sửa)
++ tentk varchar(50),						-- Tên tài khoản mặc định là copy từ tên đăng nhập qua. (có thể sửa sau)
++ sdt varchar(15) UNIQUE,					-- Số điện thoại, bắt buộc phải UNIQUE, 1 số điện thoại - 1 tài khoản. (có thể sửa sau)
++ email varchar(100) UNIQUE,					-- Email cũng phải UNIQUE luôn (có thể sửa sau)
++ diachi varchar(200),						-- Địa chỉ trùng nhau được (VD: cả nhà 4 người đăng ký 4 tài khoản :))) ) (có thể sửa sau)
++ gioithieu varchar(500),					-- Tự giới thiệu bản thân (thích thì ghi, không thì để trống)
++ cccd varchar(15) UNIQUE,					-- Căn cước công dân phải UNIQUE (có thể sửa sau)
++ msthue varchar(15) UNIQUE,					-- Mã số thuế cá nhân phải UNIQUE (có thể sửa sau)
++ gioitinh varchar(5),						-- Giới tính (Đi chuyển giới thì có thể sửa sau)
++ ngaysinh date, -- defalut format "yyyy-mm-dd"			-- Ngày sinh (để format mặc định của kiểu dữ liệu `date` luôn)
++ matkhau varchar(100) NOT NULL,				-- Mật khẩu (có thể sửa sau)
++ loaitk smallint NOT NULL,					-- Loại tài khoản (Chỉ có Admin có thể sửa)
++ sodu money NOT NULL DEFAULT 0,				-- Số dư tài khoản (mặc định lúc mới tạo đều không có đồng nào)
++ CONSTRAINT pk_tai_khoan PRIMARY KEY (matk),			-- Khóa chính: Mã tài khoản (khóa này sẽ bị tham chiếu hơi nhiều)
++ CONSTRAINT fk_tai_khoan_to_loai_tk FOREIGN KEY (loaitk) REFERENCES LOAI_TK(maloai)
+
+*** CHÚ Ý: Ở cái bảng TAI_KHOAN này khi tạo mới 1 tài khoản thì chính tài khoản này cũng là tài khoản định danh (ảo) trên web luôn. VD: Tài khoản định danh số `1` khi bưng lên Front-End sẽ để là `Mã chuyển khoản: 
+WTL0000001` hoặc đại loại vậy (tham khảo từ Guru)
+
+-- Bảng LIEN_HE -- Như cái danh bạ, lưu lại liên hệ của các tài khoản khác (các tài khoản liên hệ này bắt buộc phải là tài khoản đã đăng ký nhe)
++ matk int NOT NULL,						-- Mã tài khoản ở đây cho biết các liên hệ này thuộc về tài khoản nào
++ tenkh varchar(50) NOT NULL,					-- Tên khách hàng này là tên tài khoản
++ sdt varchar(15) NOT NULL,					-- Số điện thoại ở đây không để UNIQUE là vì 1 sdt có thể có nhiều liên hệ vs các Mã tài khoản khác (quan hệ n-n)
++ CONSTRAINT pk_lien_he PRIMARY KEY(matk, sdt), 		-- Chính vì là quan hệ n-n nên khóa chính phải gồm Mã tài khoản + số điện thoại
++ CONSTRAINT fk_lien_he_to_tai_khoan FOREIGN KEY (matk) REFERENCES TAI_KHOAN(matk)
+
+-- Bảng LIEN_KET -- Cho biết tài khoản liên kết vs bao nhiêu cái mạng xã hội (khá giống LIEN_HE ở trên)
++ matk int NOT NULL,						-- Mã tài khoản ở đây cho biết các liên kết mạng xã hội này thuộc về tài khoản nào
++ mxh varchar(30) NOT NULL,					-- Tên của mạng xã hội (Facebook, Twitter, Instagram, ...)
++ CONSTRAINT pk_lien_ket PRIMARY KEY (matk, mxh),		-- Chính vì là quan hệ n-n nên khóa chính phải gồm Mã tài khoản + mạng xã hội
++ CONSTRAINT fk_lien_ket_to_tai_khoan FOREIGN KEY (matk) REFERENCES TAI_KHOAN(matk)
+
+-- Bảng THIET_BI -- Cho biết tài khoản sử dụng bao nhiêu cái thiết bị để đăng nhập (khá giống LIEN_HE ở trên)
++ matk int NOT NULL,						-- Mã tài khoản ở đây cho biết các thiết bị được sử dụng thuộc về tài khoản nào
++ tenthietbi varchar(30) NOT NULL,				-- Tên thiết bị (Iphone 15, Laptop MSI, ...). Đổi khi tên trùng nhau, nhưng cũng có thể khác nhau
++ loaithietbi varchar(20),					-- Loại thiết bị (điện thoại, laptop, pc, máy tính bảng,...)
++ hedieuhanh varchar(10),					-- Hệ điều hành (Windows, Android, iOS, MacOS, ...)
++ trinhduyet varchar(30),					-- Trình duyệt (Chrome, Firefox, Safari, ...)
++ CONSTRAINT pk_thiet_bi PRIMARY KEY (matk, tenthietbi),	-- Chính vì là quan hệ n-n nên khóa chính phải gồm Mã tài khoản + tên thiết bị
++ CONSTRAINT fk_thietbi_taikhoan FOREIGN KEY (matk) REFERENCES TAI_KHOAN(matk)
+
+-- Bảng LS_NAP_TIEN -- Lưu lại lịch sử nạp tiền vô tài khoản định danh (ảo) trên web
++ matk int NOT NULL,						-- Mã tài khoản để biết tài khoản nào nạp tiền vô
++ ngay date NOT NULL, -- defalut format "yyyy-mm-dd"		-- Ngày nạp tiền (để format mặc định của kiểu dữ liệu `date` luôn)
++ gio time NOT NULL, -- default format "hh:mm:ss"		-- Giờ nạp tiền (để format mặc định của kiểu dữ liệu `time` luôn)
++ sotien money NOT NULL,					-- Số tiền nạp
++ noidung varchar(100) NOT NULL,				-- Nội dung nạp tiền
++ nganhang varchar(20) NOT NULL,				-- Từ ngân hàng nào
++ sodu money NOT NULL DEFAULT 0,				-- Số dư trong tài khoản
++ CONSTRAINT pk_ls_nap_tien PRIMARY KEY (matk, ngay, gio),
++ CONSTRAINT fk_ls_nap_tien_to_tai_khoan FOREIGN KEY (matk) REFERENCES TAI_KHOAN(matk)
+
+-- Bảng LS_THANH_TOAN -- Lưu lại lịch sử thanh toán với các tài khoản (đã đăng ký) khác. (Chỗ này hơi đau đầu)
++ matk int NOT NULL,						-- Mã tài khoản để biết tài khoản nào đang thanh toán
++ ngay date NOT NULL, -- defalut format "yyyy-mm-dd"		-- Ngày thanh toán (để format mặc định của kiểu dữ liệu `date` luôn)
++ gio time NOT NULL, -- default format "hh:mm:ss"		-- Giờ thanh toán (để format mặc định của kiểu dữ liệu `time` luôn)
++ sotien money NOT NULL,					-- Số tiền thanh toán (Đọc kỹ CHÚ Ý ở dưới)
++ noidung varchar(100) NOT NULL,				-- Nội dung thanh toán
++ den varchar(50) NOT NULL,					-- Thanh toán đến tên tài khoản (đã đăng ký) nào (tên tài khoản này buộc phải có trong bảng LIEN_HE)
++ sotk int NOT NULL,						-- Thanh toán đến số tài khoản định danh nào (số tài khoản cũng chính là mã tài khoản luôn).
++ CONSTRAINT pk_ls_thanh_toan PRIMARY KEY (matk, ngay, gio),
++ CONSTRAINT fk_ls_thanh_toan_to_tai_khoan FOREIGN KEY (matk) REFERENCES TAI_KHOAN(matk),
++ CONSTRAINT fk_ls_thanh_toan_to_tai_khoan_den FOREIGN KEY (sotk) REFERENCES TAI_KHOAN(matk)
+
+*** CHÚ Ý: Cái vụ thanh toán này hơi nhức đầu ở chỗ, một số tin đang là giá thỏa thuận, tức là lúc này k còn là giao dịch online nữa nó gần như trực tiếp rồi. Mà những giao dịch trực tiếp như vầy thì thường là người ta 
+tự chuyển khoản cho nhau. Thật ra thì là tất cả giao dịch luôn á, nếu là bản thân t thì t chỉ lên web rồi chọn một cái tin đăng, sao đó liên hệ vs chủ nhân rồi chuyển khoản, chứ k có thông qua cái tài khoản định danh 
+trên web => tài khoản định danh trên web chỉ để user nạp tiền vào để được đăng tin thôi. Nên là ở cái bảng LS_THANH_TOAN này chỉ để lưu lại lịch sử giao dịch các nhân giữa chủ vs khách (đó là lý do bảng này không thể 
+hiện số dư). VD: M đăng tin bán nhà 4 tỷ, t lên web search thấy rồi liên hệ vs m => giao dịch thành công => m phải gỡ cái tin đăng xuống => lúc gỡ xuống thì pop-up cái cửa sổ lên hỏi là bạn đã bán cho ai (list danh sách 
+từ bảng LIEN_HE ra), giá bao nhiêu rồi lấy thông tin đó lưu xuống bảng LS_THANH_TOAN này.
+
+-- Bảng LS_DANGNHAP -- Lưu lại lịch sử đăng nhập bằng tài khoản gì ?, trên thiết bị nào ?
++ matk int NOT NULL,						-- Mã tài khoản cho biết tài khoản nào đã đăng nhập
++ ngay date NOT NULL, -- defalut format "yyyy-mm-dd"		-- Ngày đăng nhập (để format mặc định của kiểu dữ liệu `date` luôn)
++ gio time NOT NULL, -- default format "hh:mm:ss"		-- Giờ đăng nhập (để format mặc định của kiểu dữ liệu `time` luôn)
++ tenthietbi varchar(30) NOT NULL,				-- Tên thiết bị đăng nhập (sẽ được đối chiếu qua Bảng THIET_BI)
++ tkdangnhap varchar(20) NOT NULL,				-- Tài khoản đăng nhập tức là đăng nhập vào web bằng tài khoản gì (đăng nhập bằng Facebook hay Google hay là sử dụng
+								-- tài khoản của WTL)
++ thoigian smallint NOT NULL, -- default unit "minute"		-- Thời gian đăng nhập (cái này tính sau)
++ CONSTRAINT pk_ls_dang_nhap PRIMARY KEY (matk, ngay, gio),
++ CONSTRAINT fk_ls_dang_nhap_to_tai_khoan FOREIGN KEY (matk) REFERENCES TAI_KHOAN(matk),
++ CONSTRAINT fk_ls_dang_nhap_to_thiet_bi FOREIGN KEY (matk, tenthietbi) REFERENCES THIET_BI(matk, tenthietbi)
+
+-- Bảng TIN_DANG -- Lưu lại thông tin chi tiết của từng cái tin đăng
++ matk int NOT NULL,						-- Mã tài khoản cho biết tin đăng này do tài khoản nào đăng
++ tieude varchar(255) NOT NULL,					-- Tiêu đề của tin đăng
++ gia money NOT NULL,						-- Giá của tin đăng (giá trực tiếp hoặc để thỏa thuận, cái này hơi lăn tăn kiểu dữ liệu [chuỗi hay money ?] )
++ ngay date NOT NULL, -- defalut format "yyyy-mm-dd"		-- Ngày đăng tin (để format mặc định của kiểu dữ liệu `date` luôn)
++ loainha varchar(10) NOT NULL,					-- Loại nhà
++ loaihinh varchar(10) NOT NULL,				-- Loại hình
++ diachi varchar(200) NOT NULL,					-- Địa chỉ
++ dientich smallint NOT NULL, -- default unit "M^2"		-- Diện tích
++ phongngu smallint NOT NULL, -- default unit "Phòng"		-- Số phòng ngủ
++ nhavesinh smallint NOT NULL, -- default unit "Phòng"		-- Số phòng vệ sinh
++ mota text,							-- Mô tả
++ tenlienhe varchar(50) NOT NULL,				-- Tên liên hệ (là tên tài khoản của chủ đăng tin)
++ sdt varchar(15) NOT NULL,					-- Số diện thoại của chủ đăng tin
++ email varchar(100) NOT NULL,					-- Email của chủ đăng tin
++ hinhanh bytea NOT NULL,					-- Hình ảnh
++ CONSTRAINT pk_tin_dang PRIMARY KEY(matk, tieude),
++ CONSTRAINT fk_tin_dang_to_tai_khoan FOREIGN KEY (matk) REFERENCES TAI_KHOAN(matk)
+
+-- Bảng HOA_DON -- Giao dịch thành công rồi thì phải xuất hóa đơn diện tử để còn report nữa
++ matk int NOT NULL,						-- Mã tài khoản cho biết hóa đon này thuộc về tài khoản nào
++ tieude varchar(255) NOT NULL,					-- Tiêu đề của tin đăng đã giao dịch thành công
++ ngay date NOT NULL, -- defalut format "yyyy-mm-dd"		-- Ngày lập hóa đơn (để format mặc định của kiểu dữ liệu `date` luôn)
++ gio time NOT NULL, -- default format "hh:mm:ss"		-- Giờ lập hóa đơn (để format mặc định của kiểu dữ liệu `time` luôn)
++ tenkh varchar(50) NOT NULL,					-- Tên khách hàng lấy từ trong bảng LIEN_HE ra
++ sdt varchar(15) NOT NULL,					-- Số diện thoại của khách hàng (cũng lấy từ LIEN_HE ra)
++ CONSTRAINT pk_hoa_don PRIMARY KEY(matk, tieude),
++ CONSTRAINT fk_hoa_don_to_tai_khoan FOREIGN KEY (matk) REFERENCES TAI_KHOAN(matk),
++ CONSTRAINT fk_hoa_don_to_tin_dang FOREIGN KEY (matk, tieude) REFERENCES TIN_DANG(matk, tieude),
++ CONSTRAINT fk_hoa_don_to_lien_he FOREIGN KEY (matk, sdt) REFERENCES LIEN_HE(matk, sdt)
+
+*** CHÚ Ý: Bảng HOA_DON này sẽ được cập nhật sau khi chủ tin gỡ tin đăng xuống, tức là sau khi insert row vào LS_THANH_TOAN thì mới insert row vào HOA_DON
+
+--------------------************** Ý tưởng về các FUNCTION **************--------------------
+
+1. Function cập nhập số dư tài khoản định danh (ảo) sau khi nạp tiền:
+CREATE OR REPLACE FUNCTION update_sodu_nap_tien()
+RETURNS TRIGGER AS $$
+DECLARE
+    new_sodu MONEY;
+BEGIN
+    -- Update the sodu in TAI_KHOAN table
+    UPDATE TAI_KHOAN
+    SET sodu = sodu + NEW.sotien
+    WHERE matk = NEW.matk
+    RETURNING sodu INTO new_sodu;
+
+    -- Update the sodu in LS_NAP_TIEN table
+    UPDATE LS_NAP_TIEN
+    SET sodu = new_sodu
+    WHERE matk = NEW.matk AND ngay = NEW.ngay AND gio = NEW.gio;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+---------------------------------------------------------------------------------------------
+
+2. Function cập nhật số dư tài khoản định danh (ảo) sau khi đăng tin (dựa vào loại tài khoản mà phí đăng tin sẽ khác nhau)
+CREATE OR REPLACE FUNCTION update_sodu_tin_dang()
+RETURNS TRIGGER AS $$
+DECLARE
+    loai_tk VARCHAR(10);
+    money_for_post MONEY;
+BEGIN
+    -- Get the account type
+    SELECT tenloai INTO loai_tk
+    FROM LOAI_TK
+    JOIN TAI_KHOAN ON LOAI_TK.maloai = TAI_KHOAN.loaitk
+    WHERE TAI_KHOAN.matk = NEW.matk;
+    
+    -- Determine the amount of money for posting based on the account type
+    IF loai_tk = 'new' THEN
+        money_for_post := 100;
+    ELSIF loai_tk = 'basic' THEN
+        money_for_post := 80;
+    ELSIF loai_tk = 'standard' THEN
+        money_for_post := 55;
+    ELSIF loai_tk = 'premium' THEN
+        money_for_post := 20;
+    ELSE
+        money_for_post := 0;
+    END IF;
+    
+    -- Check if the balance is sufficient
+    IF (SELECT sodu FROM TAI_KHOAN WHERE matk = NEW.matk) >= money_for_post THEN
+        -- Update the balance
+        UPDATE TAI_KHOAN
+        SET sodu = sodu - money_for_post
+        WHERE matk = NEW.matk;
+    ELSE
+        RAISE EXCEPTION 'Insufficient balance';
+    END IF;
+    
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+--------------------************** Ý tưởng về các TRIGGER **************--------------------
+
+1. Trigger gọi Function cập nhật số dư sau khi nạp tiền (TRIGGER được kích hoạt khi insert row vào bảng LS_NAP_TIEN)
+CREATE TRIGGER trg_update_sodu_nap_tien
+AFTER INSERT ON LS_NAP_TIEN
+FOR EACH ROW
+EXECUTE FUNCTION update_sodu_nap_tien();
+
+--------------------------------------------------------------------------------------------
+
+2. Trigger gọi Function cập nhật số dư sau khi đăng tin (TRIGGER được kích hoạt khi insert row vào bảng TIN_DANG)
+CREATE TRIGGER trg_update_sodu_tin_dang
+AFTER INSERT ON TIN_DANG
+FOR EACH ROW
+EXECUTE FUNCTION update_sodu_tin_dang();
+
+--------------------************** Ý tưởng về các PROCEDURE **************--------------------
+
+* Chưa có ý tưởng *

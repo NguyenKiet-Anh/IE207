@@ -5,12 +5,34 @@ import UserIcon from '../../images/icons/user.png';
 import LogoImage from '../../images/icons/logo.png';
 
 import { useAuth } from "../../AuthContext";
+import { ActiveButton } from "../../ActiveButton";
 
 function Navbar() {
     // Some functions should be put here
     const { isLoggedIn, logout } = useAuth();
     const handleLogout = async () => {
         await logout()        
+    };
+
+    const { isWishListActived, 
+        setIsWishListActived, 
+        wishListActive, 
+        wishListDeactive, 
+        isAccountActived,
+        setAccountIsActived,
+        accountActive,
+        accountDeactive } = ActiveButton();    
+    const handleWishListButton = async () => {
+        await accountDeactive();
+        await wishListActive();
+    };
+    const handleAccountButton = async () => {
+        await wishListDeactive()
+        await accountActive();
+    };
+    const handleDeactiveButton = async() => {
+        await wishListDeactive();
+        await accountDeactive();
     };
 
     // Return UI for navbar here
@@ -22,6 +44,7 @@ function Navbar() {
                     <li className="flex items-center justify-center font-bold"> 
                         <NavLink
                             to="/home"
+                            onClick={handleDeactiveButton}
                         >
                             <img src={LogoImage} alt="Logo trang web" />
                         </NavLink>                        
@@ -30,6 +53,7 @@ function Navbar() {
                     <li className="flex items-center justify-center font-bold">
                         <NavLink
                             to="/estate-for-sale"
+                            onClick={handleDeactiveButton}
                             className="transition duration-800 border-b-4 border-transparent hover:border-black"
                         >   {/* Real estate for sale */}                        
                             <p>Nhà đất bán</p> 
@@ -39,6 +63,7 @@ function Navbar() {
                     <li className="flex items-center justify-center font-bold">
                         <NavLink
                             to="estate-for-rent"
+                            onClick={handleDeactiveButton}
                             className="transition duration-800 border-b-4 border-transparent hover:border-black"
                         >   {/* Real estate for rent */}
                             <p>Nhà đất cho thuê</p>
@@ -48,6 +73,7 @@ function Navbar() {
                     <li className="flex items-center justify-center font-bold">
                         <NavLink
                             to='analysis-page'
+                            onClick={handleDeactiveButton}
                             className="transition duration-800 border-b-4 border-transparent hover:border-black"
                         >   {/* Market analysis  */}
                             <p>Phân tích</p>
@@ -57,6 +83,7 @@ function Navbar() {
                     <li className="flex items-center justify-center font-bold">
                         <NavLink
                             to="news"
+                            onClick={handleDeactiveButton}
                             className="transition duration-800 border-b-4 border-transparent hover:border-black"
                         >   {/* News */}
                             <p>Tin tức</p>
@@ -66,6 +93,7 @@ function Navbar() {
                     <li className="flex items-center justify-center font-bold">
                         <NavLink
                             to='forum'
+                            onClick={handleDeactiveButton}
                             className="transition duration-800 border-b-4 border-transparent hover:border-black"
                         >   {/* Forum */}
                             <p>Diễn đàn</p>
@@ -76,21 +104,49 @@ function Navbar() {
                         { isLoggedIn? (
                             <>
                                 <div className="w-full h-full flex items-center justify-end gap-2 md:gap-10 xl:gap-16 mr-1 md:mr-5">
-                                    <NavLink className="h-full flex items-center hover:bg-red-300">
-                                        <img 
-                                            src={AddFavouriteIcon} 
-                                            alt="Hình ảnh icon Xem danh sách yêu thích" 
-                                            className="w-12 h-12"
-                                        />
-                                    </NavLink>
-
-                                    <NavLink className="h-full flex items-center hover:bg-red-300 md:px-2">
-                                        <img 
-                                            src={UserIcon} 
-                                            alt="Hình ảnh icon Xem danh sách yêu thích" 
-                                            className="w-8 h-8"
-                                        />
-                                    </NavLink>
+                                    {isWishListActived? (
+                                        <NavLink className="h-full flex items-center bg-red-300">
+                                            <img 
+                                                src={AddFavouriteIcon} 
+                                                alt="Hình ảnh icon Xem danh sách yêu thích" 
+                                                className="w-12 h-12"
+                                            />
+                                        </NavLink>
+                                    ) : (
+                                        <NavLink 
+                                            to="/wish-list"
+                                            className="h-full flex items-center hover:bg-red-300"
+                                            onClick={handleWishListButton}
+                                        >
+                                            <img 
+                                                src={AddFavouriteIcon} 
+                                                alt="Hình ảnh icon Xem danh sách yêu thích" 
+                                                className="w-12 h-12"
+                                            />
+                                        </NavLink>
+                                    )}
+                                    
+                                    {isAccountActived? (
+                                        <NavLink className="h-full flex items-center bg-red-300 md:px-2">
+                                            <img 
+                                                src={UserIcon} 
+                                                alt="Hình ảnh icon tới trang tài khoản" 
+                                                className="w-8 h-8"
+                                            />
+                                        </NavLink>
+                                    ) : (
+                                        <NavLink 
+                                            to="/account-management"
+                                            className="h-full flex items-center hover:bg-red-300 md:px-2"
+                                            onClick={handleAccountButton}
+                                        >
+                                            <img 
+                                                src={UserIcon} 
+                                                alt="Hình ảnh icon tới trang tài khoản" 
+                                                className="w-8 h-8"
+                                            />
+                                        </NavLink>
+                                    )}
 
                                     <NavLink
                                         to="/login"
@@ -106,14 +162,6 @@ function Navbar() {
                             ) : (
                             <>
                             <div className="w-full h-full flex gap-3 md:gap-10 xl:gap-16 items-center justify-end mr-10">
-                                <NavLink className="h-full flex items-center hover:bg-red-300">
-                                    <img 
-                                        src={AddFavouriteIcon} 
-                                        alt="Hình ảnh icon Xem danh sách yêu thích" 
-                                        className="w-10 h-10 "
-                                    />
-                                </NavLink>
-
                                 <NavLink
                                     to="/login"
                                 >   {/* Login */}

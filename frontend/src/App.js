@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import EstateForSale from './pages/EstateForSale';
 import EstateForRent from './pages/EstateForRent';
+import DetailedProperty from './pages/DetailedProperty';
 import News from './pages/News';
 import AnalysisPage from './pages/AnalysisPage';
 import Forum from './pages/Forum';
@@ -23,6 +24,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/estate-for-sale" element={<EstateForSale />} />
             <Route path="/estate-for-rent" element={<EstateForRent />} />
+            <Route path="/detailed-property" element={<DetailedProperty />}></Route>
             <Route path="/analysis-page" element={<AnalysisPage />} />
             <Route path="/news" element={<News />} />
             <Route path="/forum" element={<Forum />} />

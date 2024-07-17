@@ -88,7 +88,7 @@ const PropertyCard = (props) => {
                     </button>
 
                     <div className='flex w-2/5 sm:w-1/5 items-center md:px-1 lg:px-3'>                     
-                        <a href="" className='text-red-500 font-bold underline'>
+                        <a href="/detailed-property" className='text-red-500 font-bold underline'>
                             <p>Xem chi tiết &gt;</p>
                         </a>
                     </div>

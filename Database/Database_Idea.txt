@@ -12,29 +12,37 @@ sẽ show là `TK_000001` hoặc đại loại như vậy).
 
 
 --------------------************** Ý tưởng xây dựng database (dựa trên giao diện Figma) **************--------------------
-
-- Bảng LOAI_TK -- Phân loại tài khoản + Phân quyền
+(1) - Bảng LOAI_TK -- Phân loại tài khoản + Phân quyền
 + maloai smallserial NOT NULL,					-- Mã loại (`smallserial` khóa chính tự động tăng dần khi insert row từ 1 đến 32767)
 + tenloai varchar(10) NOT NULL,					-- Tên loại tài khoản (vừa phân loại + phân quyền luôn): Gồm 5 loại (admin - premium - standard - basic - new)
-+ qtv boolean NOT NULL,						-- Quyền quản trị: True (là admin) - False (là mấy thằng user đã đăng ký tài khoản chứ k phải user vãng lai)
++ qtv boolean NOT NULL,						-- Quyền quản trị: True (là admin) - False (là mấy thằng user đã đăng ký tài khoản chứ k phải user vãng lai) -> không cần, do ở tenloai đã biết là admin hay không rồi
++ giagoi: money NOT NULL					-- Giá đăng ký gói
++ thoihan: int NOT NULL							-- Thời hạn hiệu lực của gói
++ sotin: int NOT NULL							-- Số tin được phép đăng trong thời gian có hiệu lực
+* Chú ý: 
+	new chỉ xem
+	basic thời gian tối đa 3 tháng -> mỗi tháng đăng 10 tin
+	standard thời gian tối đa 6 tháng -> mỗi tháng đăng 15 tin
+	premium thời gian tối đa 1 năm -> mỗi tháng đăng 20 tin
 + CONSTRAINT pk_loai_tk PRIMARY KEY (maloai)			-- Khóa chính: Mã loại
 
 - Bảng TAI_KHOAN -- Chứa đầy đủ thông tin của tài khoản 
 + matk serial NOT NULL,						-- Mã tài khoản giống Mã loại ở trên nhưng tăng dần từ 1 - 2147483647 (vừa là mã để phân biệt tài khoản vùa là mã của 
 								-- tài khoản định danh luôn)
-+ tendangnhap varchar(50) NOT NULL UNIQUE,			-- Tên đăng nhập phải UNIQUE vì làm gì có chuyện tên đăng nhập trùng nhau. (không cho sửa)
-+ tentk varchar(50),						-- Tên tài khoản mặc định là copy từ tên đăng nhập qua. (có thể sửa sau)
++ tendangnhap varchar(100) NOT NULL UNIQUE,			-- Tên đăng nhập phải UNIQUE vì làm gì có chuyện tên đăng nhập trùng nhau. (không cho sửa)
++ hoten varchar(100),						-- Tên tài khoản mặc định là copy từ tên đăng nhập qua. (có thể sửa sau)
 + sdt varchar(15) UNIQUE,					-- Số điện thoại, bắt buộc phải UNIQUE, 1 số điện thoại - 1 tài khoản. (có thể sửa sau)
 + email varchar(100) UNIQUE,					-- Email cũng phải UNIQUE luôn (có thể sửa sau)
 + diachi varchar(200),						-- Địa chỉ trùng nhau được (VD: cả nhà 4 người đăng ký 4 tài khoản :))) ) (có thể sửa sau)
-+ gioithieu varchar(500),					-- Tự giới thiệu bản thân (thích thì ghi, không thì để trống)
-+ cccd varchar(15) UNIQUE,					-- Căn cước công dân phải UNIQUE (có thể sửa sau)
-+ msthue varchar(15) UNIQUE,					-- Mã số thuế cá nhân phải UNIQUE (có thể sửa sau)
++ gioithieu text,   						-- Tự giới thiệu bản thân (thích thì ghi, không thì để trống)
++ cccd varchar(20) UNIQUE,					-- Căn cước công dân phải UNIQUE (có thể sửa sau)
++ msthue varchar(20) UNIQUE,					-- Mã số thuế cá nhân phải UNIQUE (có thể sửa sau)
 + gioitinh varchar(5),						-- Giới tính (Đi chuyển giới thì có thể sửa sau)
 + ngaysinh date, -- defalut format "yyyy-mm-dd"			-- Ngày sinh (để format mặc định của kiểu dữ liệu `date` luôn)
 + matkhau varchar(100) NOT NULL,				-- Mật khẩu (có thể sửa sau)
 + loaitk smallint NOT NULL,					-- Loại tài khoản (Chỉ có Admin có thể sửa)
 + sodu money NOT NULL DEFAULT 0,				-- Số dư tài khoản (mặc định lúc mới tạo đều không có đồng nào)
+(2) + anhdaidien bytea
 + CONSTRAINT pk_tai_khoan PRIMARY KEY (matk),			-- Khóa chính: Mã tài khoản (khóa này sẽ bị tham chiếu hơi nhiều)
 + CONSTRAINT fk_tai_khoan_to_loai_tk FOREIGN KEY (loaitk) REFERENCES LOAI_TK(maloai)
 
@@ -43,14 +51,14 @@ WTL0000001` hoặc đại loại vậy (tham khảo từ Guru)
 
 -- Bảng LIEN_HE -- Như cái danh bạ, lưu lại liên hệ của các tài khoản khác (các tài khoản liên hệ này bắt buộc phải là tài khoản đã đăng ký nhe)
 + matk int NOT NULL,						-- Mã tài khoản ở đây cho biết các liên hệ này thuộc về tài khoản nào
-+ tenkh varchar(50) NOT NULL,					-- Tên khách hàng này là tên tài khoản
++ tenkh varchar(100) NOT NULL,					-- Tên khách hàng này là họ tên người dùng
 + sdt varchar(15) NOT NULL,					-- Số điện thoại ở đây không để UNIQUE là vì 1 sdt có thể có nhiều liên hệ vs các Mã tài khoản khác (quan hệ n-n)
 + CONSTRAINT pk_lien_he PRIMARY KEY(matk, sdt), 		-- Chính vì là quan hệ n-n nên khóa chính phải gồm Mã tài khoản + số điện thoại
 + CONSTRAINT fk_lien_he_to_tai_khoan FOREIGN KEY (matk) REFERENCES TAI_KHOAN(matk)
 
 -- Bảng LIEN_KET -- Cho biết tài khoản liên kết vs bao nhiêu cái mạng xã hội (khá giống LIEN_HE ở trên)
 + matk int NOT NULL,						-- Mã tài khoản ở đây cho biết các liên kết mạng xã hội này thuộc về tài khoản nào
-+ mxh varchar(30) NOT NULL,					-- Tên của mạng xã hội (Facebook, Twitter, Instagram, ...)
++ mxh varchar(50) NOT NULL,					-- Tên của mạng xã hội (Facebook, Twitter, Instagram, ...)
 + CONSTRAINT pk_lien_ket PRIMARY KEY (matk, mxh),		-- Chính vì là quan hệ n-n nên khóa chính phải gồm Mã tài khoản + mạng xã hội
 + CONSTRAINT fk_lien_ket_to_tai_khoan FOREIGN KEY (matk) REFERENCES TAI_KHOAN(matk)
 
@@ -70,11 +78,11 @@ WTL0000001` hoặc đại loại vậy (tham khảo từ Guru)
 + sotien money NOT NULL,					-- Số tiền nạp
 + noidung varchar(100) NOT NULL,				-- Nội dung nạp tiền
 + nganhang varchar(20) NOT NULL,				-- Từ ngân hàng nào
-+ sodu money NOT NULL DEFAULT 0,				-- Số dư trong tài khoản
+(3) Không cần thêm thông tin về số dư trong table này - do liên kết khóa ngoại sang tai_khoan nen quan đó xem vẫn ok
 + CONSTRAINT pk_ls_nap_tien PRIMARY KEY (matk, ngay, gio),
 + CONSTRAINT fk_ls_nap_tien_to_tai_khoan FOREIGN KEY (matk) REFERENCES TAI_KHOAN(matk)
 
--- Bảng LS_THANH_TOAN -- Lưu lại lịch sử thanh toán với các tài khoản (đã đăng ký) khác. (Chỗ này hơi đau đầu)
+(4) -- Bảng LS_THANH_TOAN -- Lưu lại lịch sử thanh toán với các tài khoản (đã đăng ký) khác. (Chỗ này hơi đau đầu) => Kiến nghị không cần dùng tới nữa
 + matk int NOT NULL,						-- Mã tài khoản để biết tài khoản nào đang thanh toán
 + ngay date NOT NULL, -- defalut format "yyyy-mm-dd"		-- Ngày thanh toán (để format mặc định của kiểu dữ liệu `date` luôn)
 + gio time NOT NULL, -- default format "hh:mm:ss"		-- Giờ thanh toán (để format mặc định của kiểu dữ liệu `time` luôn)
@@ -90,40 +98,56 @@ WTL0000001` hoặc đại loại vậy (tham khảo từ Guru)
 tự chuyển khoản cho nhau. Thật ra thì là tất cả giao dịch luôn á, nếu là bản thân t thì t chỉ lên web rồi chọn một cái tin đăng, sao đó liên hệ vs chủ nhân rồi chuyển khoản, chứ k có thông qua cái tài khoản định danh 
 trên web => tài khoản định danh trên web chỉ để user nạp tiền vào để được đăng tin thôi. Nên là ở cái bảng LS_THANH_TOAN này chỉ để lưu lại lịch sử giao dịch các nhân giữa chủ vs khách (đó là lý do bảng này không thể 
 hiện số dư). VD: M đăng tin bán nhà 4 tỷ, t lên web search thấy rồi liên hệ vs m => giao dịch thành công => m phải gỡ cái tin đăng xuống => lúc gỡ xuống thì pop-up cái cửa sổ lên hỏi là bạn đã bán cho ai (list danh sách 
-từ bảng LIEN_HE ra), giá bao nhiêu rồi lấy thông tin đó lưu xuống bảng LS_THANH_TOAN này.
+từ bảng LIEN_HE ra), giá bao nhiêu rồi lấy thông tin đó lưu xuống bảng LS_THANH_TOAN này. (5) => t thấy bỏ bảng này ra thôi. thực tế mấy cái web mà cần giao địch một lượng tiền lớn như vậy chắc ăn là phải trực tiếp (nó còn các thủ tục pháp lý khác), trang web chỉ hỗ trợ trung gian kết nối giữa người mua và bán không hỗ trợ "bán " hộ đâu, còn tin đăng xong thì nó lên xóa và cũng không cần phải báo lại trang web nữa (mình đã lấy tiền hội viên đăng tin rồi).
 
 -- Bảng LS_DANGNHAP -- Lưu lại lịch sử đăng nhập bằng tài khoản gì ?, trên thiết bị nào ?
 + matk int NOT NULL,						-- Mã tài khoản cho biết tài khoản nào đã đăng nhập
 + ngay date NOT NULL, -- defalut format "yyyy-mm-dd"		-- Ngày đăng nhập (để format mặc định của kiểu dữ liệu `date` luôn)
 + gio time NOT NULL, -- default format "hh:mm:ss"		-- Giờ đăng nhập (để format mặc định của kiểu dữ liệu `time` luôn)
 + tenthietbi varchar(30) NOT NULL,				-- Tên thiết bị đăng nhập (sẽ được đối chiếu qua Bảng THIET_BI)
-+ tkdangnhap varchar(20) NOT NULL,				-- Tài khoản đăng nhập tức là đăng nhập vào web bằng tài khoản gì (đăng nhập bằng Facebook hay Google hay là sử dụng
++ tkdangnhap varchar(20) NOT NULL,				-- Tài khoản đăng nhập tức là đăng nhập vào web bằng tài khoản gì (đăng nhập bằng Facebook hay Google hay là sử dụng (6) -> Không cần thiết mọi thông tin đăng nhập của tài khoản đều nằm ở TAI_KHOAN nên chỉ matk là đủ rồi
 								-- tài khoản của WTL)
-+ thoigian smallint NOT NULL, -- default unit "minute"		-- Thời gian đăng nhập (cái này tính sau)
++ thoigian smallint NOT NULL, -- default unit "minute"		-- Thời gian đăng nhập (cái này tính sau) (7) -> Không cần thiết, không cần phải quản lý tới thời lượng phiên đăng nhập của người dùng, mình quản lý thì cũng không có dùng đến, nếu là web cung cấp service như cloud thì cần.
 + CONSTRAINT pk_ls_dang_nhap PRIMARY KEY (matk, ngay, gio),
 + CONSTRAINT fk_ls_dang_nhap_to_tai_khoan FOREIGN KEY (matk) REFERENCES TAI_KHOAN(matk),
 + CONSTRAINT fk_ls_dang_nhap_to_thiet_bi FOREIGN KEY (matk, tenthietbi) REFERENCES THIET_BI(matk, tenthietbi)
 
+(8) -- Bảng LOAI_NHA -- Lưu lại thông tin về loại nhà, tách bảng riêng để khi mà bên phía chủ web muốn thêm loại nhà mới vô web thì có thể thêm ở đây
++ maloai: smallserial NOT NULL					-- Mã định danh cho từng loại nhà
++ tenloainha varchar(50) UNIQUE							-- Tên cụ thể của loại nhà - không trùng
++ CONSTRAINT pk_loai_nha PRIMARY KEY(maloai)
+
 -- Bảng TIN_DANG -- Lưu lại thông tin chi tiết của từng cái tin đăng
-+ matk int NOT NULL,						-- Mã tài khoản cho biết tin đăng này do tài khoản nào đăng
++ matin serial NOT NULL						-- Mã định danh cho tin đăng, không dùng khóa chính là matk với tieude do tieude có thể gây chậm nếu dùng vào các tác vụ có liên quan đến index
++ matk serial NOT NULL,						-- Mã tài khoản cho biết tin đăng này do tài khoản nào đăng
++ loainha smallserial NOT NULL					-- Mã loại nhà - khóa ngoại liên kết tới bảng LOAI_NHA
+
 + tieude varchar(255) NOT NULL,					-- Tiêu đề của tin đăng
-+ gia money NOT NULL,						-- Giá của tin đăng (giá trực tiếp hoặc để thỏa thuận, cái này hơi lăn tăn kiểu dữ liệu [chuỗi hay money ?] )
-+ ngay date NOT NULL, -- defalut format "yyyy-mm-dd"		-- Ngày đăng tin (để format mặc định của kiểu dữ liệu `date` luôn)
-+ loainha varchar(10) NOT NULL,					-- Loại nhà
-+ loaihinh varchar(10) NOT NULL,				-- Loại hình
++ gia money NOT NULL,						-- Giá của tin đăng (giá trực tiếp hoặc để thỏa thuận, cái này hơi lăn tăn kiểu dữ liệu [chuỗi hay money ?] -> (9) dùng money nếu là 0 trên frontend tự hiển thị là "Giá thỏa thuận")
++ ngaydang date NOT NULL, -- defalut format "yyyy-mm-dd"	-- Ngày đăng tin (để format mặc định của kiểu dữ liệu `date` luôn)
+(10) + ngaysuacuoi date NOT NULL 					-- Ngày chỉnh sửa cuối cùng	
+
++ loaihinh boolean, defaul action 'Bán'				-- Loại hình, 'bán' hoặc 'cho thuê'
 + diachi varchar(200) NOT NULL,					-- Địa chỉ
-+ dientich smallint NOT NULL, -- default unit "M^2"		-- Diện tích
++ dientich float NOT NULL, -- default unit "M^2"		-- Diện tích
 + phongngu smallint NOT NULL, -- default unit "Phòng"		-- Số phòng ngủ
 + nhavesinh smallint NOT NULL, -- default unit "Phòng"		-- Số phòng vệ sinh
-+ mota text,							-- Mô tả
-+ tenlienhe varchar(50) NOT NULL,				-- Tên liên hệ (là tên tài khoản của chủ đăng tin)
-+ sdt varchar(15) NOT NULL,					-- Số diện thoại của chủ đăng tin
-+ email varchar(100) NOT NULL,					-- Email của chủ đăng tin
-+ hinhanh bytea NOT NULL,					-- Hình ảnh
-+ CONSTRAINT pk_tin_dang PRIMARY KEY(matk, tieude),
-+ CONSTRAINT fk_tin_dang_to_tai_khoan FOREIGN KEY (matk) REFERENCES TAI_KHOAN(matk)
++ phaply boolean, default status 'Không'			-- Tình trạng pháp lý (có hoặc không)
++ noithat boolean, default status 'Không'			-- Tình trạng nội thất (có hoặc không)
 
--- Bảng HOA_DON -- Giao dịch thành công rồi thì phải xuất hóa đơn diện tử để còn report nữa
++ mota text,							-- Mô tả
++ tenlienhe varchar(50) NOT NULL,				-- Tên liên hệ (là tên tài khoản của chủ đăng tin) (11) -> Không cần do liên kết tới bảng TAI_KHOAN là được
++ sdt varchar(15) NOT NULL,					-- Số diện thoại của chủ đăng tin (12) -> Không cần
++ email varchar(100) NOT NULL,					-- Email của chủ đăng tin (13) -> Không cần
+
+(14) + kinhdo float						-- Kinh độ dùng trong map
+(15) + vido float						-- Vĩ độ dùng trong map
++ hinhanh bytea NOT NULL,					-- Hình ảnh 
+(16) + CONSTRAINT pk_tin_dang PRIMARY KEY(matin),
+(17) + CONSTRAINT fk_tin_dang_to_tai_khoan FOREIGN KEY (matk) REFERENCES TAI_KHOAN(matk) 
+(18) + CONSTRAINT fk_tin_dang_to_loai_nha FOREIGN KEY(loainha) REFERENCES LOAI_NHA(maloai)
+
+(19) -- Bảng HOA_DON -- Giao dịch thành công rồi thì phải xuất hóa đơn diện tử để còn report nữa -> nhưng report cho ai, report cái gì, mình lấy report này để làm gì? mình là web môi giới trung gian nên cũng không cần lưu lại thông tin hoa đơn đâu. Với lại dù chủ đăng có gỡ tin cũng chưa chắc là nó bán thành công (có thể dính pháp lý gì đó (như bên băng, cầm sổ đỏ, ...), không muốn bán nữa, ...) hoặc nó bán được rồi mà nó không muốn gỡ tin (trường hợp này mình căn cứ vào ngaydang - quá 1 tháng hoặc 2 tháng gì đó bên web tự gỡ tin đó)
 + matk int NOT NULL,						-- Mã tài khoản cho biết hóa đon này thuộc về tài khoản nào
 + tieude varchar(255) NOT NULL,					-- Tiêu đề của tin đăng đã giao dịch thành công
 + ngay date NOT NULL, -- defalut format "yyyy-mm-dd"		-- Ngày lập hóa đơn (để format mặc định của kiểu dữ liệu `date` luôn)
@@ -136,6 +160,31 @@ từ bảng LIEN_HE ra), giá bao nhiêu rồi lấy thông tin đó lưu xuốn
 + CONSTRAINT fk_hoa_don_to_lien_he FOREIGN KEY (matk, sdt) REFERENCES LIEN_HE(matk, sdt)
 
 *** CHÚ Ý: Bảng HOA_DON này sẽ được cập nhật sau khi chủ tin gỡ tin đăng xuống, tức là sau khi insert row vào LS_THANH_TOAN thì mới insert row vào HOA_DON
+
+(20) Bảng YEU_THICH thể hiện tin đăng được thêm vào yêu thích (của từng tài khoản)
++ matk: serial NOT NULL 									-- Mã tài khoản
++ tindang: serial NOT NULL									-- Mã tin đăng được thêm vào YEU_THICH
++ CONSTRAINT pk_yeu_thich PRIMARY KEY(matk, matin)						-- Quan hệ n-n
++ CONTRAINT fk_yeu_thich_to_tai_khoan FOREIGN KEY(matk) REFERENCES TAI_KHOAN(matk)	
++ CONTRAINT fk_yeu_thich_to_tin_dang FOREIGN KEY(tindang) REFERENCES TIN_DANG(matin)
+
+(21) Bảng LS_MUA_GOI thể hiện các thông tin đăng cấp gói tài khoản
++ matk serial NOT NULL										-- Mã tài khoản mua gói
++ loaitk smallserial NOT NULL									-- Mã loại tài khoản (nâng cấp lên loại gì)
++ ngaymua: date											-- Ngày mua gói
++ CONSTRAINT pk_ls_mua_goi PRIMARY KEY(matk, maloai)	 					-- Quan hệ n-n
++ CONTRAINT fk_ls_mu_goi_to_tai_khoan FOREIGN KEY(matk) REFERENCES TAI_KHOAN(matk)	
++ CONTRAINT fk_ls_mu_goi_to_loai_tk FOREIGN KEY(loaitk) REFERENCES LOAI_TK(maloai)
+
+(22) Bảng TIN_TUC thể hiện thông tin cho phần tin tức - không liên kết tới bất kỳ bảng nào khác
++ matintuc smallserial NOT NULL
++ tieude: text
++ noidung: text
++ ngaydang: date
++ giodang: time without time zone
++ tentacgia: character varying(30)
++ hinhanh: bytea array[]
++ CONSTRAINT pk_tin_tuc PRIMARY KEY(matintuc)
 
 --------------------************** Ý tưởng về các FUNCTION **************--------------------
 

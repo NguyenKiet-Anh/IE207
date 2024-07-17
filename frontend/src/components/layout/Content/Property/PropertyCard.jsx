@@ -3,10 +3,13 @@ import BedRoomIcon from '../../../../images/icons/bed.png';
 import BathRoomIcon from '../../../../images/icons/bath.png';
 import PhoneIcon from '../../../../images/icons/smartphone.png';
 import Acreageicon from '../../../../images/icons/acreage.png';
+import YesIcon from '../../../../images/icons/yes.png';
+import FurnitureIcon from '../../../../images/icons/furniture.png';
+import policyIcon from '../../../../images/icons/policy.png';
 
 const PropertyCard = (props) => {
     return (
-        <div className="flex flex-wrap rounded-3xl my-6 hover:bg-slate-200">
+        <div className="flex flex-wrap rounded-3xl my-6 bg-slate-200">
             <div className="w-1/3">
                 <img 
                     src={props.img}
@@ -17,7 +20,7 @@ const PropertyCard = (props) => {
             <div className="w-2/3 pl-1">
                 <div className="flex flex-wrap items-center my-3">
                     <p className='w-3/6 font-bold text-xl'>{props.title}</p>
-                    <p className='w-2/6 font-bold text-lg text-red-500 text-center'>{props.price}</p>
+                    <p className='w-2/6 font-bold text-xl text-red-500 text-center'>{props.price}</p>
                     <button className='w-1/6 flex justify-center'>
                         <img 
                             src={AddFavouriteIcon}
@@ -29,7 +32,7 @@ const PropertyCard = (props) => {
 
                 <p className='mx-2 my-2 lg:my-5 text-lg italic'>{props.address}</p>
 
-                <div className="flex items-center gap-5 lg:gap-16 mx-4 my-3">
+                <div className="flex flex-wrap items-center gap-4 lg:gap-6 xl:gap-16 mx-4 my-3">
                     <div className='flex gap-1 lg:gap-2 items-center justify-start rounded rounded-2xl'>
                         <img 
                             src={Acreageicon} 
@@ -56,6 +59,25 @@ const PropertyCard = (props) => {
                         />
                         <p className='lg:text-lg'>{props.bathroom}</p>
                     </div>
+
+                    <div className='flex gap-1 lg:gap-2 items-center justify-start rounded rounded-2xl'>
+                        <img 
+                            src={FurnitureIcon} 
+                            alt="Icon nội thất" 
+                            className='h-6 lg:h-8'
+                        />
+                        <p className='lg:text-lg'>{props.bathroom}</p>
+                    </div>
+
+                    <div className='flex gap-1 lg:gap-2 items-center justify-start rounded rounded-2xl'>
+                        <img 
+                            src={policyIcon} 
+                            alt="Icon pháp lý" 
+                            className='h-6 lg:h-8'
+                        />
+                        <p className='lg:text-lg'>{props.bathroom}</p>
+                    </div>
+
                 </div>
                 
                 <div className="flex">
@@ -76,18 +98,18 @@ const PropertyCard = (props) => {
 
                     <div className='w-1/5'></div>
 
-                    <button className='flex w-1/5 mx-8 lg:mx-1 justify-end items-center'>
-                        <div className='bg-red-500 p-2 rounded-xl'>
+                    <button className='flex w-1/5 lg:w-2/5 lg:mx-1 justify-end items-center'>
+                        <div className='flex flex-wrap bg-red-500 py-1 pl-1 lg:p-2 rounded-xl'>
                             <img 
                                 src={PhoneIcon} 
                                 alt="Icon điện thọai" 
                                 className='h-6'
                             />
-                            <p className='font-bold text-white'>{props.phone}</p>
+                            <p className='ml-1 font-bold text-white'>{props.phone}</p>
                         </div>
                     </button>
 
-                    <div className='flex w-2/5 sm:w-1/5 items-center md:px-1 lg:px-3'>                     
+                    <div className='flex w-2/5 sm:w-1/5 items-center ml-1 md:px-1 lg:px-3'>
                         <a href="/detailed-property" className='text-red-500 font-bold underline'>
                             <p>Xem chi tiết &gt;</p>
                         </a>

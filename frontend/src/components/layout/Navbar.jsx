@@ -15,9 +15,9 @@ function Navbar() {
 
     // Return UI for navbar here
     return (
-        <nav>            
+        <nav className="sticky top-0 bg-white pb-5">
             {/* Navbar option list */}
-            <div className="pb-5">
+            <div>
                 <ul className="grid grid-cols-10 gap-2 h-20">
                     <li className="flex items-center justify-center font-bold"> 
                         <NavLink
@@ -72,29 +72,23 @@ function Navbar() {
                         </NavLink>
                     </li>
 
-                    <li className="col-span-1 md:col-span-2"></li>
-
-                    <li className="col-span-3 md:col-span-2 flex items-center justify-center ml-2 font-bold mr-5">
+                    <li className="col-span-4 flex items-center">
                         { isLoggedIn? (
                             <>
-                                <div className="flex items-center gap-1 md:gap-5">
-                                    <NavLink>
+                                <div className="w-full h-full flex items-center justify-end gap-2 md:gap-10 xl:gap-16 mr-1 md:mr-5">
+                                    <NavLink className="h-full flex items-center hover:bg-red-300">
                                         <img 
                                             src={AddFavouriteIcon} 
                                             alt="Hình ảnh icon Xem danh sách yêu thích" 
-                                            width={40}
-                                            height={40}
-                                            className="hover:bg-red-300 hover:rounded-lg"
+                                            className="w-12 h-12"
                                         />
                                     </NavLink>
 
-                                    <NavLink>
+                                    <NavLink className="h-full flex items-center hover:bg-red-300 md:px-2">
                                         <img 
                                             src={UserIcon} 
                                             alt="Hình ảnh icon Xem danh sách yêu thích" 
-                                            width={40}
-                                            height={40}
-                                            className="hover:bg-red-300 hover:rounded-lg"
+                                            className="w-8 h-8"
                                         />
                                     </NavLink>
 
@@ -103,33 +97,32 @@ function Navbar() {
                                         onClick={handleLogout}
                                     >   {/* Login */}
                                         <button 
-                                            className="flex justify-center bg-red-500 rounded rounded-2xl hover:bg-black">
-                                            <p className="text-white py-3 md:px-4">Đăng xuất</p>
+                                            className="bg-red-500 rounded-lg hover:bg-black">
+                                            <p className="text-white px-1 py-3 md:px-4">Đăng xuất</p>
                                         </button>
                                     </NavLink>
                                 </div>
                             </>
                             ) : (
                             <>
-                            
-                            <NavLink>
-                                <img 
-                                    src={AddFavouriteIcon} 
-                                    alt="Hình ảnh icon Xem danh sách yêu thích" 
-                                    width={40}
-                                    height={40}
-                                    className="hover:bg-red-300 hover:rounded-lg"
-                                />
-                            </NavLink>
+                            <div className="w-full h-full flex gap-3 md:gap-10 xl:gap-16 items-center justify-end mr-10">
+                                <NavLink className="h-full flex items-center hover:bg-red-300">
+                                    <img 
+                                        src={AddFavouriteIcon} 
+                                        alt="Hình ảnh icon Xem danh sách yêu thích" 
+                                        className="w-10 h-10 "
+                                    />
+                                </NavLink>
 
-                            <NavLink
-                                to="/login"
-                            >   {/* Login */}
-                                <button 
-                                    className="flex justify-center bg-red-500 rounded rounded-2xl hover:bg-black">
-                                    <p className="text-white py-3 md:py-3 md:px-4">Đăng nhập</p>
-                                </button>
-                            </NavLink>
+                                <NavLink
+                                    to="/login"
+                                >   {/* Login */}
+                                    <button 
+                                        className="flex justify-center bg-red-500 rounded-lg hover:bg-black">
+                                        <p className="text-white py-3 px-1 md:py-3 md:px-4">Đăng nhập</p>
+                                    </button>
+                                </NavLink>
+                            </div>
                             </>
                         )}
                         

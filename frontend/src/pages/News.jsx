@@ -23,7 +23,7 @@ function News() {
                                     id="news-search-bar" 
                                     type="text" 
                                     placeholder="   Tìm kiếm tin..."
-                                    className="w-1/4 h-9 mr-10 rounded rounded-xl border border-black"
+                                    className="w-1/4 h-9 mr-10 rounded rounded-lg border border-black"
                                 />
                             </div>                            
                         </div>
@@ -31,9 +31,8 @@ function News() {
                         <div className="flex flex-wrap">
                             <div className="w-2/3">
                                 <p className="ml-10 font-bold text-2xl">Tin tức</p>
-                                { NewsListData.map((newslist, index) => (
+                                { NewsListData.map((newslist) => (
                                     <NewsList 
-                                        key = {index}
                                         img = {newslist.img}
                                         timestamp = {newslist.timestamp}
                                         author = {newslist.author}

@@ -1,7 +1,7 @@
-const PropertyInformation = () => {
+const PropertyInformation = (props) => {
     return (
         <div className="bg-slate-300 rounded-lg">
-            <div className="bg-white m-2"> { /**/ }
+            <div className="bg-white mx-2 "> { /**/ }
                 <p>Thông tin pháp lý</p>
             </div>
 

@@ -8,7 +8,7 @@ function Filter() {
                     d="search-bar" 
                     type="text" 
                     placeholder="   Tìm kiếm tin..."
-                    className="w-4/5 h-10 rounded rounded-xl border border-black"
+                    className="w-4/5 h-10 rounded-lg border border-black"
                 />
                 <button
                     className="w-2/5 md:w-1/5 px-2 font-bold text-white bg-red-500 rounded rounded-md"
@@ -17,7 +17,7 @@ function Filter() {
                 </button>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-5 md:gap-7 xl:gap-12">
+            <div className="flex flex-wrap justify-between gap-2">
                 <select 
                     name="estate-type" 
                     id="estate-type-option"
@@ -50,7 +50,7 @@ function Filter() {
                     <option value="default">Số phòng</option>
                 </select>
                 
-                <button className="w-1/7 h-8 ml-5 px-2 bg-red-300 text-white font-bold rounded rounded-lg">
+                <button className="w-1/7 h-8 ml-5 px-2 bg-red-300 text-white font-bold rounded-lg">
                     Đặt lại
                 </button>
             </div>

@@ -29,7 +29,9 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/estate-for-sale" element={<EstateForSale />} />
               <Route path="/estate-for-rent" element={<EstateForRent />} />
-              <Route path="/detailed-property" element={<DetailedProperty />}></Route>
+              <Route path="/detailed-property" element={<DetailedProperty />}>
+                <Route path=":propertyId" element={<DetailedProperty />} ></Route>
+              </Route>
               <Route path="/analysis-page" element={<AnalysisPage />} />
               <Route path="/news" element={<News />} />
               <Route path="/forum" element={<Forum />} />

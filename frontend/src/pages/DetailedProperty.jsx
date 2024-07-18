@@ -1,23 +1,45 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import PropertyInformation from '../components/layout/Content/Property/DetailedDisplay/PropertyInformation';
 import PropertyIntroduction from '../components/layout/Content/Property/DetailedDisplay/PropertyIntroduction';
 import RelativeProperty from "../components/layout/Content/Property/DetailedDisplay/RelativeProperty";
 
-const DetailedProperty = ( {property} ) => {
-    console.log(property);
+import CardDataForSale from '../assets/EstateForSale/EstateForSaleCardData';
+
+const DetailedProperty = ( ) => {
+    // Params here
+    const { propertyId } = useParams();
+    const [propertydata, setPropertyData] = useState([]);
+
+    // Functions here
+    useEffect(() => {
+            const getPropertyAsId = async () => {
+                for (let i=0; i < CardDataForSale.length; i++)
+                {
+                    if (CardDataForSale[i].id === parseInt(propertyId))
+                    {   
+                        setPropertyData(CardDataForSale[i])
+                        break
+                    }
+                }
+            }             
+            getPropertyAsId();
+        }, []);
+        
+    // Render here
     return (
             <Fragment>
                 <div className='flex flex-wrap justify-center'> { /* for introduction and information*/ }
-                    <div className='bg-green-500 w-full lg:w-3/6'>
-                        <PropertyIntroduction></PropertyIntroduction>
+                    <div className='w-full lg:w-3/6'>
+                        <PropertyIntroduction property={propertydata}></PropertyIntroduction>
                     </div>
-                    <div className='w-full lg:w-1/6'>                        
-                        <PropertyInformation></PropertyInformation>
+                    <div className='w-full sm:w-2/6'>                        
+                        <PropertyInformation property={propertydata}></PropertyInformation>
                     </div>
                 </div>
 
                 <div className='flex justify-center'> {/* for relative property */}
-                    <div className='w-full lg:w-2/3 bg-yellow-500'>
+                    <div className='w-full lg:w-2/3'>
                         <RelativeProperty></RelativeProperty>
                     </div>
                 </div>

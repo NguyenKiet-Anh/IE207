@@ -154,7 +154,7 @@ function Navbar() {
                                     >   {/* Login */}
                                         <button 
                                             className="bg-red-500 rounded-lg hover:bg-black">
-                                            <p className="text-white px-1 py-3 md:px-4">Đăng xuất</p>
+                                            <p className="text-white font-bold px-1 py-3 md:px-4">Đăng xuất</p>
                                         </button>
                                     </NavLink>
                                 </div>
@@ -167,7 +167,7 @@ function Navbar() {
                                 >   {/* Login */}
                                     <button 
                                         className="flex justify-center bg-red-500 rounded-lg hover:bg-black">
-                                        <p className="text-white py-3 px-1 md:py-3 md:px-4">Đăng nhập</p>
+                                        <p className="text-white font-bold py-3 px-1 md:py-3 md:px-4">Đăng nhập</p>
                                     </button>
                                 </NavLink>
                             </div>

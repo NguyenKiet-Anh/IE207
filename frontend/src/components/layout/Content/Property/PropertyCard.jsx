@@ -7,11 +7,12 @@ import FurnitureIcon from '../../../../images/icons/furniture.png';
 import policyIcon from '../../../../images/icons/policy.png';
 import LocationIcon from '../../../../images/icons/location.png';
 
+import { Link } from 'react-router-dom';
+
 const PropertyCard = (props) => {
     // Functions here
     const handleDetailedInformation = () => {
-        console.log("hello");
-        console.log(props.id);
+        // console.log(props.id);
     };
 
     // Render here
@@ -39,7 +40,7 @@ const PropertyCard = (props) => {
                     </button>
                 </div>
 
-                <div className='flex mx-3 my-3 lg:my-5'> { /* Row for address */ }
+                <div className='flex mx-3 lg:my-5 xl:my-8'> { /* Row for address */ }
                     <img 
                         src={LocationIcon} 
                         alt="Icon vị trí" 
@@ -96,7 +97,7 @@ const PropertyCard = (props) => {
 
                 </div>
                 
-                <div className="flex my-5 xl:h-1/5 xl:items-end ml-2"> { /* Row for date and see detailed informtion */ }
+                <div className="flex xl:h-1/5 xl:items-end ml-2 lg:mb-5"> { /* Row for date and see detailed informtion */ }
                     <div className='w-1/2 flex items-center'>
                         <p className='text-sm lg:text-md'>Ngày đăng: <span className='italic'>{props.update}</span></p>
                         {/* <div className='w-1/3 my-1'>
@@ -125,13 +126,16 @@ const PropertyCard = (props) => {
                     </button> */}
 
                     <div className='flex w-1/2 items-center justify-end mr-3'>
-                        <a 
-                            href="/detailed-property" 
-                            className='text-sm lg:text-md xl:text-lg text-red-500 font-bold underline'
-                            onClick={handleDetailedInformation}
-                        > { /* Send id to the router link - then load data as the received id */ }
-                            <p>Xem chi tiết &gt;</p>
-                        </a>
+                        <Link
+                            to={`/detailed-property/${props.id}`}
+                        >
+                            <div                             
+                                className='text-sm lg:text-md xl:text-lg text-red-500 font-bold underline'
+                                onClick={handleDetailedInformation}
+                            > { /* Send id to the router link - then load data as the received id */ }
+                                <p>Xem chi tiết &gt;</p>
+                            </div>
+                        </Link>
                     </div>
 
                 </div>

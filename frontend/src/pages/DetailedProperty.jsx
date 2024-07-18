@@ -5,22 +5,32 @@ import PropertyIntroduction from '../components/layout/Content/Property/Detailed
 import RelativeProperty from "../components/layout/Content/Property/DetailedDisplay/RelativeProperty";
 
 import CardDataForSale from '../assets/EstateForSale/EstateForSaleCardData';
+import CardDataForRent from '../assets/EstateForRent/EstateForRentCardData';
 
 const DetailedProperty = ( ) => {
     // Params here
-    const { propertyId } = useParams();
+    const { kind, propertyId } = useParams();
     const [propertydata, setPropertyData] = useState([]);
 
     // Functions here
     useEffect(() => {
             const getPropertyAsId = async () => {
                 for (let i=0; i < CardDataForSale.length; i++)
-                {
-                    if (CardDataForSale[i].id === parseInt(propertyId))
-                    {   
-                        setPropertyData(CardDataForSale[i])
-                        break
-                    }
+                {   
+                    if (parseInt(kind) === parseInt(0)) {                    
+                        if (CardDataForSale[i].id === parseInt(propertyId))
+                        {   
+                            setPropertyData(CardDataForSale[i])
+                            break
+                        }
+                    } 
+                    else if (parseInt(kind) === parseInt(1)) {
+                        if (CardDataForRent[i].id === parseInt(propertyId))
+                        {   
+                            setPropertyData(CardDataForRent[i])
+                            break
+                        }
+                    }                               
                 }
             }             
             getPropertyAsId();

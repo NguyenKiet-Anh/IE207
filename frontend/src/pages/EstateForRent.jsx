@@ -12,20 +12,25 @@ function EstateForRent() {
             <div className='col-span-3'>
                 <Filter></Filter>
                 <div className='mt-5 mr-1'>
-                    {CardDataForRent.map((card, index) => (
+                    {CardDataForRent.map((card) => (
                         <PropertyCard
-                            key={index}
+                            kind={card.kind}
+                            id={card.id}
                             img={card.img}
                             title={card.title}
+                            about={card.abo}
                             price={card.price}
                             address={card.address}
                             area={card.area}
                             bedroom={card.bedroom}
                             bathroom={card.bathroom}
+                            furniture={card.furniture}
+                            policy={card.policy}
                             author_img={card.author_img}
                             author_name={card.author_name}
-                            date={card.date}
+                            update={card.update}
                             phone={card.phone}
+                            map={card.map}
                         ></PropertyCard>
                     ))}
                 </div>

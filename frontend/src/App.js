@@ -23,24 +23,25 @@ function App() {
       <BrowserRouter>
       <AuthProvider>
         <ActiveProvider>
-          <Navbar />
-            <Routes>
-              <Route path="/" element={<Home />}></Route>
-              <Route path="/home" element={<Home />} />
-              <Route path="/estate-for-sale" element={<EstateForSale />} />
-              <Route path="/estate-for-rent" element={<EstateForRent />} />
-              <Route path="/detailed-property" element={<DetailedProperty />}>
-                <Route path=":propertyId" element={<DetailedProperty />} ></Route>
-              </Route>
-              <Route path="/analysis-page" element={<AnalysisPage />} />
-              <Route path="/news" element={<News />} />
-              <Route path="/forum" element={<Forum />} />
-              <Route path="/wish-list" element={<WishList />}></Route>
-              <Route path="/account-management" element={<AccountManegement />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup"  element={<Signup />} />
-            </Routes>
-          <Footer />
+            <Navbar />
+              <Routes>
+                <Route path="/" element={<Home />}></Route>
+                <Route path="/home" element={<Home />} />
+                <Route path="/estate-for-sale" element={<EstateForSale />} />
+                <Route path="/estate-for-rent" element={<EstateForRent />} />              
+                <Route path="/detailed-property/sale/:propertyId/:kind" element={<DetailedProperty />}>
+                  </Route>
+                <Route path="/detailed-property/rent/:propertyId/:kind" element={<DetailedProperty />}>
+                  </Route>
+                <Route path="/analysis-page" element={<AnalysisPage />} />
+                <Route path="/news" element={<News />} />
+                <Route path="/forum" element={<Forum />} />
+                <Route path="/wish-list" element={<WishList />}></Route>
+                <Route path="/account-management" element={<AccountManegement />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup"  element={<Signup />} />
+              </Routes>
+            <Footer />
         </ActiveProvider>
       </AuthProvider>
       </BrowserRouter>

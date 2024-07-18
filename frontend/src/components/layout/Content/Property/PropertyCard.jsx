@@ -11,9 +11,6 @@ import { Link } from 'react-router-dom';
 
 const PropertyCard = (props) => {
     // Functions here
-    const handleDetailedInformation = () => {
-        // console.log(props.id);
-    };
 
     // Render here
     return (
@@ -126,16 +123,27 @@ const PropertyCard = (props) => {
                     </button> */}
 
                     <div className='flex w-1/2 items-center justify-end mr-3'>
-                        <Link
-                            to={`/detailed-property/${props.id}`}
-                        >
-                            <div                             
-                                className='text-sm lg:text-md xl:text-lg text-red-500 font-bold underline'
-                                onClick={handleDetailedInformation}
-                            > { /* Send id to the router link - then load data as the received id */ }
-                                <p>Xem chi tiết &gt;</p>
-                            </div>
-                        </Link>
+                        {props.kind === 0? (
+                            <Link
+                                to={`/detailed-property/sale/${props.id}/${props.kind}`}
+                            >
+                                <div                             
+                                    className='text-sm lg:text-md xl:text-lg text-red-500 font-bold underline'
+                                > { /* Send id to the router link - then load data as the received id */ }
+                                    <p>Xem chi tiết &gt;</p>
+                                </div>
+                            </Link>
+                        ) : (
+                            <Link
+                                to={`/detailed-property/rent/${props.id}/${props.kind}`}
+                            >
+                                <div                             
+                                    className='text-sm lg:text-md xl:text-lg text-red-500 font-bold underline'
+                                > { /* Send id to the router link - then load data as the received id */ }
+                                    <p>Xem chi tiết &gt;</p>
+                                </div>
+                            </Link>
+                        )}                        
                     </div>
 
                 </div>

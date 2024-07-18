@@ -14,6 +14,7 @@ function EstateForSale() {
                 <div className='mt-5 mr-1'>
                     {CardDataForSale.map((card) => (
                         <PropertyCard
+                            kind={card.kind}
                             id={card.id}
                             img={card.img}
                             title={card.title}

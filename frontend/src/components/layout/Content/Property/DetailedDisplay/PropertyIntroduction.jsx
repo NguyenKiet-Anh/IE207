@@ -64,7 +64,7 @@ const PropertyIntroduction = ({ property }) => {
                 </div>
             </div>
 
-            <div className='my-5'> { /*About*/ }
+            <div className='my-5 mr-5'> { /*About*/ }
                 <p>{property.about}</p>
             </div>
         </div>

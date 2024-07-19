@@ -8,21 +8,22 @@ import BrokerProperty from '../components/layout/Content/Broker/BrokerProperty';
 
 import BrokerData from '../assets/BrokerData/BrokerData';
 import CardDataForSale from '../assets/EstateForSale/EstateForSaleCardData';
+import CardDataForRent from "../assets/EstateForRent/EstateForRentCardData";
 
 function AuthorViewer(){
     // Variables here
     const { authorId } = useParams();
     const [brokerDataWanted, setBrokerDataWanted] = useState({});
-
     const [saleShow, setSaleShow] = useState(true);
-    
+    const [saleDataLen] = useState(CardDataForSale.length);
+    const [rentDataLen] = useState(CardDataForRent.length);
     // functions here
     useEffect(() => {
             const getBrokerData = async () => {    
                 for(let i=0;i<BrokerData.length;i++)
                 {   
                     if ( parseInt(BrokerData[i].id) === parseInt(authorId) ) {
-                        setBrokerDataWanted(BrokerData[i]);
+                        setBrokerDataWanted(BrokerData[i]);                        
                     }
                 }                
             };
@@ -103,7 +104,7 @@ function AuthorViewer(){
                         <div className="w-full flex ml-3 border-b-2">
                             <div className="w-1/3 flex justify-center">
                                 <button className="py-5 bg-red-500 text-white px-2">
-                                    <p className="font-bold">Nhà đất bán ({brokerDataWanted.num_sale})</p>
+                                    <p className="font-bold">Nhà đất bán ({saleDataLen})</p>
                                 </button>
                             </div> 
 
@@ -112,13 +113,13 @@ function AuthorViewer(){
                                     className="py-5 hover:bg-red-500 hover:text-white hover:px-2" 
                                     onClick={handleOffSaleShow}    
                                 >
-                                    <p className="font-bold">Nhà cho thuê ({brokerDataWanted.num_rent})</p>
+                                    <p className="font-bold">Nhà cho thuê ({rentDataLen})</p>
                                 </button>
                             </div>
                         </div>
                         {/* Show content here */}
-                        <div>
-                            {CardDataForSale.map((card) => (
+                        <div className="xl:flex">
+                            {CardDataForSale.map((card) => (                                
                                 <BrokerProperty
                                     id={card.id}
                                     img={card.img}
@@ -142,21 +143,33 @@ function AuthorViewer(){
                                     className="py-5 hover:bg-red-500 hover:text-white hover:px-2"
                                     onClick={handleOnSaleShow}
                                 >
-                                    <p className="font-bold">Nhà đất bán ({brokerDataWanted.num_sale})</p>
+                                    <p className="font-bold">Nhà đất bán ({saleDataLen})</p>
                                 </button>
                             </div> 
 
                             <div className="w-1/3 flex justify-center">
                                 <button className="py-5 bg-red-500 text-white px-2" >
-                                    <p className="font-bold">Nhà cho thuê ({brokerDataWanted.num_rent})</p>
+                                    <p className="font-bold">Nhà cho thuê ({rentDataLen})</p>
                                 </button>
                             </div>
-
-                            {/* Show content here */}
-                            <div>
-                                <BrokerProperty></BrokerProperty>
-                            </div>
                         </div>
+                        {/* Show content here */}
+                        <div className="xl:flex">
+                        {CardDataForRent.map((card) => (                                
+                            <BrokerProperty
+                                id={card.id}
+                                img={card.img}
+                                price={card.price}
+                                address={card.address}
+                                bedroom={card.bedroom}
+                                bathroom={card.bathroom}
+                                author_img={card.author_img}
+                                author_name={card.author_name}
+                                update={card.update}
+                            >
+                            </BrokerProperty>
+                        ))}
+                    </div>
                             </>                            
                     )}                                           
                     

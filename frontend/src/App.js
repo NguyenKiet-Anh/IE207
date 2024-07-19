@@ -9,10 +9,12 @@ import AnalysisPage from './pages/AnalysisPage';
 import Forum from './pages/Forum';
 import WishList from './pages/WishList';
 import AccountManegement from './pages/AccountManagement';
+import AuthorViewer from './pages/AuthorViewer';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
+
 
 import { AuthProvider } from './AuthContext';
 import { ActiveProvider } from './ActiveButton';
@@ -40,6 +42,7 @@ function App() {
                 <Route path="/account-management" element={<AccountManegement />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup"  element={<Signup />} />
+                <Route path="/author-viewer/:authorId" element={<AuthorViewer />} />
               </Routes>
             <Footer />
         </ActiveProvider>

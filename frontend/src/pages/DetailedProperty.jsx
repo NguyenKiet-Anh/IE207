@@ -7,7 +7,7 @@ import RelativeProperty from "../components/layout/Content/Property/DetailedDisp
 import CardDataForSale from '../assets/EstateForSale/EstateForSaleCardData';
 import CardDataForRent from '../assets/EstateForRent/EstateForRentCardData';
 
-const DetailedProperty = ( ) => {
+const DetailedProperty = () => {
     // Params here
     const { kind, propertyId } = useParams();
     const [propertydata, setPropertyData] = useState([]);
@@ -43,7 +43,7 @@ const DetailedProperty = ( ) => {
                     <div className='w-full lg:w-3/6'>
                         <PropertyIntroduction property={propertydata}></PropertyIntroduction>
                     </div>
-                    <div className='w-full sm:w-2/6'>                        
+                    <div className='w-full lg:w-2/6'>                        
                         <PropertyInformation property={propertydata}></PropertyInformation>
                     </div>
                 </div>

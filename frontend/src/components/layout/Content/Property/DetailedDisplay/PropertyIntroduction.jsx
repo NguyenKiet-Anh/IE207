@@ -40,9 +40,9 @@ const PropertyIntroduction = ({ property }) => {
                 </div>
                 
                 <div className="w-2/6 flex justify-center">
-                    <div className='w-2/3 sm:w-1/2 bg-slate-300 rounded-xl'>
+                    <div className='w-2/3 sm:w-1/2 bg-slate-300 rounded-xl shadow-lg'>
                         <Link 
-                        to=""
+                        to={`/author-viewer/${property.author_id}`}
                         >
                             <div className='my-2 flex justify-center'>
                                 <img 

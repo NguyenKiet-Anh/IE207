@@ -8,7 +8,7 @@ import AddWishListIcon from '../../../../../images/icons/add-wishlist.png';
 
 const PropertyInformation = ({ property }) => {
     return (
-        <div className="bg-slate-300 rounded-lg py-5">
+        <div className="bg-slate-300 rounded-lg py-5 shadow-xl"> { /**/ }
             <div className="bg-white mx-2 rounded-md py-2">
                 <div className='mx-2'>
                     <p className="font-bold text-lg">Thông tin pháp lý</p>
@@ -28,10 +28,10 @@ const PropertyInformation = ({ property }) => {
                 </div>
             </div>
 
-            <div className="bg-white mx-2 my-5 rounded-md py-4"> { /**/ }
+            <div className="bg-white mx-2 my-5 rounded-md py-4 shadow-xl"> { /**/ }
                 <div className='mx-2'>
                     <p className="font-bold text-lg">Thông tin bất động sản</p>
-                    <p className='my-4 mx-1'>Diện tích: <span className='italic'>{property.area} m^2</span></p>
+                    <p className='my-4 mx-1'>Diện tích: <span className='font-bold italic'> {property.area} m^2</span></p>
 
                     <div className='my-3'>
                         <div className='flex justify-start gap-2 py-1.5 ml-1 w-2/5 sm:w-3/5 lg:w-2/5 bg-slate-300 rounded-lg'>

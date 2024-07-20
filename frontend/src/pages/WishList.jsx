@@ -20,59 +20,34 @@ function WishList() {
 
     // Render here
     return (
-        <div>
+        <div className="py-3">
             <div className="flex justify-between mx-5">
-                {isSale? (
-                    <>
-                        <div className="flex gap-3">                    
-                            <div>
-                                <button className="p-4 bg-red-500 text-white">
-                                    <p className="font-bold">Nhà bán ({WishListSaleData.length})</p>
-                                </button>
-                            </div>
-                            <div className="p-4 hover:bg-red-500 hover:text-white">
-                                <button
-                                    onClick={handleOffSale}
-                                >
-                                    <p className="font-bold">Nhà cho thuê ({WishListRentData.length})</p>
-                                </button>
-                            </div>
-                        </div>
-                        <div className="p-4 hover:bg-red-500 hover:text-white">
-                            <button>
-                                <p className="font-bold">Xóa tất cả</p>
-                            </button>
-                        </div>
-                    </>
-                ) : (
-                    <>
-                        <div className="flex gap-3">                    
-                            <div>
-                                <button className="p-4 hover:bg-red-500 hover:text-white"
-                                onClick={handleOnSale}>
-                                    <p className="font-bold">Nhà bán ({WishListSaleData.length})</p>
-                                </button>
-                            </div>
-                            <div className="p-4 bg-red-500 text-white">
-                                <button>
-                                    <p className="font-bold">Nhà cho thuê ({WishListRentData.length})</p>
-                                </button>
-                            </div>
-                        </div>
-                        <div className="p-4 hover:bg-red-500 hover:text-white">
-                            <button>
-                                <p className="font-bold">Xóa tất cả</p>
-                            </button>
-                        </div>
-                    </>
-                )}            
+                <div className="flex gap-3">                    
+                    <button
+                        className={`p-4 ${isSale? "bg-red-500 text-white" : "hover:bg-red-500 hover:text-white"}`}
+                        onClick={handleOnSale}
+                    >
+                        <p className="font-bold">Nhà bán ({WishListSaleData.length})</p>
+                    </button>
+                    <button
+                        className={`p-4 ${isSale? "hover:bg-red-500 hover:text-white" : "bg-red-500 text-white"}`}
+                        onClick={handleOffSale}
+                    >
+                        <p className="font-bold">Nhà cho thuê ({WishListRentData.length})</p>
+                    </button>
+                </div>
+                <button
+                    className="p-4 hover:bg-red-500 hover:text-white"
+                >
+                    <p className="font-bold">Xóa tất cả</p>
+                </button>
             </div>
             <hr />
             {isSale? (
-                <div>
+                <div className="2xl:flex">
                     {WishListSaleData.map((data) => (
                         <div className="flex justify-center">
-                            <div className="md:w-3/6 lg:w-5/6 2xl:w-1/2">
+                            <div className="md:w-2/3 lg:w-5/6">
                                 <PropertyCard
                                     kind={data.kind}
                                     id={data.id}
@@ -95,10 +70,10 @@ function WishList() {
                     ))}       
                 </div>
             ) : (
-                <div>
+                <div className="2xl:flex">
                     {WishListRentData.map((data) => (
                         <div className="flex justify-center">
-                            <div className="md:w-3/6 lg:w-5/6 2xl:w-1/2">
+                            <div className="md:w-2/3 lg:w-5/6">
                                 <PropertyCard
                                     kind={data.kind}
                                     id={data.id}
@@ -123,7 +98,7 @@ function WishList() {
             )}            
             <div>
                 <div className="flex justify-center">
-                    <button className="bg-red-500 p-3 rounded-xl hover:bg-black">
+                    <button className="bg-red-500 p-3 rounded-xl hover:bg-black lg:w-[150px] xl:w-[200px]">
                         <p className="font-bold text-white">Xem thêm</p>
                     </button>
                 </div>                

@@ -22,6 +22,7 @@ function Navbar() {
         setAccountIsActived,
         accountActive,
         accountDeactive } = ActiveButton();    
+
     const handleWishListButton = async () => {
         await accountDeactive();
         await wishListActive();

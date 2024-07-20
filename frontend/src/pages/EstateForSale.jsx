@@ -18,7 +18,7 @@ function EstateForSale() {
                             id={card.id}
                             img={card.img}
                             title={card.title}
-                            about={card.abo}
+                            about={card.about}
                             price={card.price}
                             address={card.address}
                             area={card.area}

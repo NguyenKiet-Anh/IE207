@@ -4,7 +4,7 @@ import BathIcon from '../../../../images/icons/bath.png';
 const BrokerProperty = (author_property) => {
     return (
         <div className='pb-10 pt-2 xl:w-1/2'>
-            <div className="mx-2 border-b">
+            <div className="mx-2 border">
                 <div className="h-56 md:h-64 flex justify-center">
                     <img 
                         src={author_property.img} 

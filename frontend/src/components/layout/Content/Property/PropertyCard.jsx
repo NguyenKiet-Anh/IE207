@@ -1,4 +1,5 @@
 import AddFavouriteIcon from '../../../../images/icons/add-favourite.png';
+import RemoveFavouriteIcon from '../../../../images/icons/remove-wishlist.png';
 import BedRoomIcon from '../../../../images/icons/bed.png';
 import BathRoomIcon from '../../../../images/icons/bath.png';
 import Acreageicon from '../../../../images/icons/acreage.png';
@@ -7,10 +8,12 @@ import FurnitureIcon from '../../../../images/icons/furniture.png';
 import policyIcon from '../../../../images/icons/policy.png';
 import LocationIcon from '../../../../images/icons/location.png';
 
+import { ActiveButton } from '../../../../ActiveButton';
 import { Link } from 'react-router-dom';
 
 const PropertyCard = (props) => {
     // Functions here
+    const { isWishListActived } = ActiveButton();
 
     // Render here
     return (
@@ -28,13 +31,24 @@ const PropertyCard = (props) => {
                 <div className="flex flex-wrap items-center my-1"> { /* Row for title and price */ }
                     <p className='w-3/6 font-bold text-md lg:text-lg xl:text-xl'>{props.title}</p>
                     <p className='w-2/6 font-bold text-md lg:text-lg xl:text-xl text-red-500 text-center'>{props.price}</p>
-                    <button className='w-1/6 flex justify-center'>
-                        <img 
-                            src={AddFavouriteIcon}
-                            alt="Icon thêm tin vào danh sách quan tâm" 
-                            className='w-10 h-10 hover:bg-red-400 hover:rounded-md'
-                        />
-                    </button>
+                    {isWishListActived? (
+                        <button className='w-1/6 flex justify-center'>
+                            <img 
+                                src={RemoveFavouriteIcon}
+                                alt="Icon thêm tin vào danh sách quan tâm" 
+                                className='w-10 h-10 hover:bg-red-400 hover:rounded-md'
+                            />
+                        </button>
+                    ) : (
+                        <button className='w-1/6 flex justify-center'>
+                            <img 
+                                src={AddFavouriteIcon}
+                                alt="Icon thêm tin vào danh sách quan tâm" 
+                                className='w-10 h-10 hover:bg-red-400 hover:rounded-md'
+                            />
+                        </button>
+                    )}
+                    
                 </div>
 
                 <div className='flex mx-3 lg:my-5 xl:my-8'> { /* Row for address */ }

@@ -7,14 +7,17 @@ import YesIcon from '../../../../images/icons/yes.png';
 import FurnitureIcon from '../../../../images/icons/furniture.png';
 import policyIcon from '../../../../images/icons/policy.png';
 import LocationIcon from '../../../../images/icons/location.png';
+import TrashIcon from '../../../../images/icons/trash.png';
 
+import { useAdmin } from '../../../../AdminState';  
 import { ActiveButton } from '../../../../ActiveButton';
 import { Link } from 'react-router-dom';
 
 const PropertyCard = (props) => {
     // Functions here
     const { isWishListActived } = ActiveButton();
-
+    const { isInAdminPage } = useAdmin();
+    
     // Render here
     return (
         <div className="flex flex-wrap rounded-lg my-6 bg-slate-200 shadow-lg">
@@ -31,7 +34,7 @@ const PropertyCard = (props) => {
                 <div className="flex flex-wrap items-center my-1"> { /* Row for title and price */ }
                     <p className='w-3/6 font-bold text-md lg:text-lg xl:text-xl'>{props.title}</p>
                     <p className='w-2/6 font-bold text-md lg:text-lg xl:text-xl text-red-500 text-center'>{props.price}</p>
-                    {isWishListActived? (
+                    {/* {isWishListActived? (
                         <button className='w-1/6 flex justify-center'>
                             <img 
                                 src={RemoveFavouriteIcon}
@@ -47,7 +50,35 @@ const PropertyCard = (props) => {
                                 className='w-10 h-10 hover:bg-red-400 hover:rounded-md'
                             />
                         </button>
-                    )}
+                    )} */}
+                    
+                    {isWishListActived &&
+                        <button className='w-1/6 flex justify-center'>
+                            <img 
+                                src={RemoveFavouriteIcon}
+                                alt="Icon thêm tin vào danh sách quan tâm" 
+                                className='w-10 h-10 hover:bg-red-400 hover:rounded-md'
+                            />
+                        </button>
+                    }
+                    {!isWishListActived && !isInAdminPage &&
+                        <button className='w-1/6 flex justify-center'>
+                            <img 
+                                src={AddFavouriteIcon}
+                                alt="Icon thêm tin vào danh sách quan tâm" 
+                                className='w-10 h-10 hover:bg-red-400 hover:rounded-md'
+                            />
+                        </button>
+                    }
+                    {!isWishListActived && isInAdminPage &&
+                        <button className='w-1/6 flex justify-center'>
+                            <img 
+                                src={TrashIcon}
+                                alt="Icon thêm tin vào danh sách quan tâm" 
+                                className='w-10 h-10 hover:bg-red-400 hover:rounded-md'
+                            />
+                        </button>
+                    }
                     
                 </div>
 

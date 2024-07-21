@@ -1,4 +1,9 @@
+import { useAdmin } from '../../../../AdminState';    
+
 const NewsList = (props) => {
+    // 
+    const { isInAdminPage } = useAdmin();    
+    // Return render
     return (
         <div className="border-b border-black">
             <div className="flex flex-wrap my-3">
@@ -16,9 +21,21 @@ const NewsList = (props) => {
                         <p className="line-clamp-3 2xl:line-clamp-4">{props.content}</p>
                     </div>
                     <div className="pr-5 2xl:pt-5 flex justify-end">
-                        <a href={`news/detailed-new/${props.id}`} className="hover:text-blue-500">
-                            <p className="italic underline">Xem chi tiết</p>
-                        </a>
+                        {isInAdminPage? (
+                            <div className='flex-col'>
+                                <a href={`news/detailed-new/${props.id}`} className="hover:text-blue-500">
+                                    <p className="italic underline">Xem chi tiết</p>
+                                </a>
+                                <button className='hover:text-blue-500 text-red-500 italic underline'>
+                                    Xóa tin
+                                </button>
+                            </div>
+                        ) : (
+                            <a href={`news/detailed-new/${props.id}`} className="hover:text-blue-500">
+                                <p className="italic underline">Xem chi tiết</p>
+                            </a>
+                        )}
+                        
                     </div>
                 </div>
             </div>

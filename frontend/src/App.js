@@ -19,6 +19,7 @@ import Footer from './components/layout/Footer';
 
 import { AuthProvider } from './AuthContext';
 import { ActiveProvider } from './ActiveButton';
+import { AdminProvider } from './AdminState';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
       <BrowserRouter>
       <AuthProvider>
         <ActiveProvider>
+          <AdminProvider>
             <Navbar />
               <Routes>
                 <Route path="/" element={<Home />}></Route>
@@ -47,6 +49,7 @@ function App() {
                 <Route path="/author-viewer/:authorId" element={<AuthorViewer />} />
               </Routes>
             <Footer />
+          </AdminProvider>
         </ActiveProvider>
       </AuthProvider>
       </BrowserRouter>

@@ -6,10 +6,13 @@ import LogoImage from '../../images/icons/logo.png';
 
 import { useAuth } from "../../AuthContext";
 import { ActiveButton } from "../../ActiveButton";
+import { useAdmin } from "../../AdminState";
 
 function Navbar() {    
     // Some functions should be put here
     const { isLoggedIn, logout } = useAuth();
+    const { isInAdminPage, adminPageActive, adminPageDeactive } = useAdmin();
+
     const handleLogout = async () => {
         await logout()
     };
@@ -26,16 +29,24 @@ function Navbar() {
     const handleWishListButton = async () => {
         await accountDeactive();
         await wishListActive();
+        await adminPageDeactive();
     };
     const handleAccountButton = async () => {
         await wishListDeactive()
         await accountActive();
+        await adminPageDeactive();
+    };
+    const handleInAdminPage = async () => {
+        await wishListDeactive()
+        await accountDeactive();
+        await adminPageActive();
     };
     const handleDeactiveButton = async() => {
         await wishListDeactive();
         await accountDeactive();
+        await adminPageDeactive();
     };
-
+    
     // Return UI for navbar here
     return (
         <nav className="sticky top-0 bg-white pb-5">
@@ -98,6 +109,7 @@ function Navbar() {
                             to='/admin-page'
                             onClick={handleDeactiveButton}
                             className="transition duration-800 border-b-4 border-transparent hover:border-black"
+                            onClick={handleInAdminPage}
                         >   {/* Forum */}
                             <p>Quản trị viên</p>
                         </NavLink>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from 'react-router-dom';
 import AddFavouriteIcon from '../../images/icons/add-favourite.png';
 import UserIcon from '../../images/icons/user.png';
@@ -7,11 +7,11 @@ import LogoImage from '../../images/icons/logo.png';
 import { useAuth } from "../../AuthContext";
 import { ActiveButton } from "../../ActiveButton";
 
-function Navbar() {
+function Navbar() {    
     // Some functions should be put here
     const { isLoggedIn, logout } = useAuth();
     const handleLogout = async () => {
-        await logout()        
+        await logout()
     };
 
     const { isWishListActived, 
@@ -91,13 +91,15 @@ function Navbar() {
                         </NavLink>
                     </li>
 
-                    <li className="flex items-center justify-center font-bold">
+                    {/* admin-page just appear in case user is administrator */}
+
+                    <li className="flex items-center justify-center font-bold">                        
                         <NavLink
-                            to='forum'
+                            to='/admin-page'
                             onClick={handleDeactiveButton}
                             className="transition duration-800 border-b-4 border-transparent hover:border-black"
                         >   {/* Forum */}
-                            <p>Diễn đàn</p>
+                            <p>Quản trị viên</p>
                         </NavLink>
                     </li>
 

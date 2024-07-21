@@ -108,16 +108,16 @@ function Signup() {
                     </button>
                 </div>
                 {/* Row 9: or */}
-                <div className="grid grid-cols-5 mb-4">
-                    <div className="col-span-2 mt-2 ml-2">
+                <div className="grid grid-cols-1 mb-4">
+                    {/* <div className="col-span-2 mt-2 ml-2">
                         __________________________
-                    </div>
+                    </div> */}
                     <div className="col-span-1 text-center italic mt-3">
                         Hoặc
                     </div>
-                    <div className="col-span-2 mt-2 mr-2">
+                    {/* <div className="col-span-2 mt-2 mr-2">
                         ___________________________
-                    </div>
+                    </div> */}
                 </div>
                 {/* Row 10: already have account? */}
                 <div className="flex justify-center mb-4 ">

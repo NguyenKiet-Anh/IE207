@@ -101,16 +101,16 @@ function Login() {
                         ĐĂNG NHẬP
                     </button>
                 </div>                    
-                <div className="grid grid-cols-5">
-                    <div className="col-span-2 mt-2 ml-2">
+                <div className="grid grid-cols-1">
+                    {/* <div className="col-span-2 mt-2 ml-2">
                     ___________________________
-                    </div>
+                    </div> */}
                     <div className="col-span-1 text-center italic mt-3">
                         Hoặc
                     </div>
-                    <div className="col-span-2 mt-2 mr-2">
+                    {/* <div className="col-span-2 mt-2 mr-2">
                         ___________________________
-                    </div>
+                    </div> */}
                 </div>
                 <div className="flex h-10 lg:h-12 justify-center mt-4">
                         <button className="w-4/5 rounded-lg border border-black-500">

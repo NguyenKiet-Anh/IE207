@@ -32,9 +32,11 @@ function News() {
                             <div className="w-2/3">
                                 <p className="ml-10 font-bold text-2xl">Tin tức</p>
                                 { NewsListData.map((newslist) => (
-                                    <NewsList 
+                                    <NewsList
+                                        id = {newslist.id}
                                         img = {newslist.img}
-                                        timestamp = {newslist.timestamp}
+                                        date = {newslist.date}
+                                        hour = {newslist.hour}
                                         author = {newslist.author}
                                         title = {newslist.title}
                                         content = {newslist.content}

@@ -1,7 +1,7 @@
 function AnalysisPage() {
     return (
         <div>
-            <p>Trang phân tích kỹ thuật</p>
+            Trang sẽ làm sau - do trang thống kê thì phải hoàn thiện các quá trình CRUD trước rồi mới làm.
         </div>
     );
 };

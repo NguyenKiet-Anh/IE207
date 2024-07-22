@@ -1,7 +1,7 @@
 function Home() {
 return (
         <div>
-            This is home page
+            Làm sau - Do trong trang này có tồn tại nhiều tính năng machine learning.
         </div>
     );
 };

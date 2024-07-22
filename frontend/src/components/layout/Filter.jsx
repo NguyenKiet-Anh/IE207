@@ -1,6 +1,9 @@
 import React from "react";
 
 function Filter() {
+    // 
+
+    // 
     return (
         <div className="mt-3 ml-10 mr-10 py-2 border-b border-slate-300">   {/* Navbar for filtering, only appears with 'Nhà đất bán' and 'Nhà đất cho thuê' */}            
             <div className="flex gap-3 pb-3">

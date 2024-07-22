@@ -6,6 +6,9 @@ import Map from '../components/layout/Content/Property/Map';
 import CardDataForSale from '../assets/EstateForSale/EstateForSaleCardData';
 
 function EstateForSale() {
+    // 
+    
+    // 
     return (
         <div className="grid grid-cols-1 md:grid-cols-6 mb-20">
             <div></div>

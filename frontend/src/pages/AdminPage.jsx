@@ -9,12 +9,18 @@ import CardDataForProperty from '../assets/AdminData/AdminProperty';
 import NewsListData from '../assets/News/NewsListData';
 
 function AdminPage() {
-    // Variables here
+    // Variables for State
     const [accountActived, setAccountActived] = useState(true);
     const [propertyActived, setPropertyActived] = useState(false);
     const [newsActived, setNewsActived] = useState(false);    
 
-    // Functions here
+    // Variables for searching
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchAccountResults, setSearchAccountResults] = useState([]);
+    const [searchPropertyResults, setSearchPropertyResults] = useState([]);
+    const [searchNewsResults, setSearchNewsResults] = useState([]);
+
+    // Functions for State
     const handleAccountActived = () => {
         setAccountActived(true);
         setPropertyActived(false);
@@ -33,13 +39,46 @@ function AdminPage() {
         setNewsActived(true);
     };
 
+    // Functions for searching
     useEffect(() => {
-        const getDataForAdminPage = () => {
-
-        };
-        getDataForAdminPage();
-    }, []);
+        if (accountActived) {
+            const results = BrokerData.filter((item) => item.broker_name.toLowerCase().includes(searchTerm.toLowerCase()));
+            setSearchAccountResults(results);
+        }
+        else if (propertyActived) {
+            const results = CardDataForProperty.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
+            setSearchPropertyResults(results);
+        }
+        else {
+            const results = NewsListData.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
+            setSearchNewsResults(results);
+        }
+    }, [searchTerm, BrokerData, CardDataForProperty, NewsListData]);
     
+    const handleSearchInputChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const handleSearchInputSubmit = (event) => {
+        event.preventDefault();
+        if (accountActived) {
+            const results = BrokerData.filter((item) => item.broker_name.toLowerCase().includes(searchTerm.toLowerCase()));
+            setSearchAccountResults(results);
+        }
+        else if (propertyActived) {
+            const results = CardDataForProperty.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
+            setSearchPropertyResults(results);
+        }
+        else {
+            const results = NewsListData.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
+            setSearchNewsResults(results);
+        }
+    };
+
+    const items_account = searchTerm ? searchAccountResults : BrokerData
+    const items_property = searchTerm ? searchPropertyResults : CardDataForProperty
+    const items_news = searchTerm ? searchNewsResults : NewsListData
+
     //  Render return here
     return (
         <div className='flex-col'>
@@ -49,27 +88,32 @@ function AdminPage() {
                         className={`p-4 font-bold ${accountActived? "bg-red-500 text-white" : "hover:bg-red-500 hover:text-white"}`}
                         onClick={handleAccountActived}
                     >
-                        <p>Tài khoản (0)</p>
+                        <p>Tài khoản ({BrokerData.length})</p>
                     </button>
                     <button 
                         className={`p-4 font-bold ${propertyActived? "bg-red-500 text-white" : "hover:bg-red-500 hover:text-white"}`}
                         onClick={handlePropertyActived}
                     >
-                        <p>Nhà đất (0)</p>
+                        <p>Nhà đất ({CardDataForProperty.length})</p>
                     </button>
                     <button 
                         className={`p-4 font-bold ${newsActived? "bg-red-500 text-white" : "hover:bg-red-500 hover:text-white"}`}
                         onClick={handleNewsActived}
                     >
-                        <p>Tin tức (0)</p>
+                        <p>Tin tức ({NewsListData.length})</p>
                     </button>
                 </div>
                 <div className='flex items-center m-3 lg:w-1/2 lg:justify-end'>
-                    <input 
-                        type="text" 
-                        placeholder='   Tìm kiếm ...'
-                        className='w-[250px] border-2 rounded-lg lg:w-1/2'
-                    />
+                    <form onSubmit={handleSearchInputSubmit} 
+                        className='border-2 rounded-lg lg:w-1/2'
+                    >
+                        <input 
+                            type="text" 
+                            placeholder='   Tìm kiếm ...'
+                            value={searchTerm}
+                            onChange={handleSearchInputChange}
+                        />
+                    </form>                    
                 </div>
             </div>
             
@@ -77,7 +121,7 @@ function AdminPage() {
             <div>
                 { accountActived && 
                     <div className='lg:flex flex-wrap justify-center'>
-                        {BrokerData.map((data) => (
+                        {items_account.map((data) => (
                             <AccountCard
                                 id={data.id}
                                 img={data.img}
@@ -94,7 +138,7 @@ function AdminPage() {
                 { propertyActived &&
                 <div className='lg:flex lg:justify-center'>
                     <div className='lg:w-2/3 xl:w-1/2'>
-                        {CardDataForProperty.map((data) => (
+                        {items_property.map((data) => (
                             <PropertyCard
                                 kind={data.kind}
                                 id={data.id}
@@ -116,7 +160,7 @@ function AdminPage() {
                 { newsActived &&
                     <div className='lg:flex justify-center'>
                         <div className='lg:w-2/3'>
-                            {NewsListData.map((data) => (
+                            {items_news.map((data) => (
                                 <NewsList
                                     id={data.id}
                                     img={data.img}

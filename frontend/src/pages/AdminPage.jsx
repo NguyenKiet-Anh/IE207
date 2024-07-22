@@ -64,11 +64,11 @@ function AdminPage() {
                         <p>Tin tức (0)</p>
                     </button>
                 </div>
-                <div className='flex items-center m-3'>
+                <div className='flex items-center m-3 lg:w-1/2 lg:justify-end'>
                     <input 
                         type="text" 
                         placeholder='   Tìm kiếm ...'
-                        className='w-[250px] border-2 rounded-lg'
+                        className='w-[250px] border-2 rounded-lg lg:w-1/2'
                     />
                 </div>
             </div>

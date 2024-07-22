@@ -1,4 +1,5 @@
 import { useAdmin } from '../../../../AdminState';    
+import { Link } from 'react-router-dom';
 
 const NewsList = (props) => {
     // 
@@ -23,17 +24,23 @@ const NewsList = (props) => {
                     <div className="pr-5 2xl:pt-5 flex justify-end">
                         {isInAdminPage? (
                             <div className='flex-col'>
-                                <a href={`news/detailed-new/${props.id}`} className="hover:text-blue-500">
+                                <Link
+                                    to={`/news/detailed-new/${props.id}`}
+                                    className="hover:text-blue-500"                                
+                                >
                                     <p className="italic underline">Xem chi tiết</p>
-                                </a>
+                                </Link>
                                 <button className='hover:text-blue-500 text-red-500 italic underline'>
                                     Xóa tin
                                 </button>
                             </div>
                         ) : (
-                            <a href={`news/detailed-new/${props.id}`} className="hover:text-blue-500">
+                            <Link
+                                to={`/news/detailed-new/${props.id}`}
+                                className="hover:text-blue-500"                                
+                            >
                                 <p className="italic underline">Xem chi tiết</p>
-                            </a>
+                            </Link>
                         )}
                         
                     </div>

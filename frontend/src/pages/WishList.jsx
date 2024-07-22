@@ -36,11 +36,19 @@ function WishList() {
                         <p className="font-bold">Nhà cho thuê ({WishListRentData.length})</p>
                     </button>
                 </div>
-                <button
-                    className="p-4 hover:bg-red-500 hover:text-white"
-                >
-                    <p className="font-bold">Xóa tất cả</p>
-                </button>
+                <div className="flex items-center space-x-3 lg:w-1/2 lg:flex lg:justify-end">
+                    <input 
+                        type="text" 
+                        placeholder="   Tìm kiếm ..."
+                        className="border-2 rounded-lg lg:w-1/2"
+                    />
+                    <button
+                        className="p-4 hover:bg-red-500 hover:text-white"
+                    >
+                        <p className="font-bold">Xóa tất cả</p>
+                    </button>
+                </div>                
+                
             </div>
             <hr />
             {isSale? (

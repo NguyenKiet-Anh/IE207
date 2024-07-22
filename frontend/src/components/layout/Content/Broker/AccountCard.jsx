@@ -1,3 +1,4 @@
+import { Link } from  'react-router-dom';
 import TrashIcon from '../../../../images/icons/trash.png';
 
 const AccountCard = (props) => {
@@ -24,9 +25,12 @@ const AccountCard = (props) => {
                     <p className='text-lg'> <span className='italic'>Tài khoản: </span> {props.account_type}</p>
                     <p className='text-lg'> <span className='italic'>Ngày nâng cấp: </span> {props.date_bought}</p>
                 </div>                
-                <a href={`/author-viewer/${props.id}`}>
+                <Link
+                    to={`/author-viewer/${props.id}`} 
+
+                >
                     <p className="py-3 text-end underline italic mr-5">Xem chi tiết</p>
-                </a>
+                </Link>
             </div>            
         </div>
     );

@@ -3,9 +3,8 @@ import PropertyCard from "../components/layout/Content/Property/PropertyCard";
 import WishListSaleData from '../assets/WishListData/WishListSaleData';
 import WishListRentData from "../assets/WishListData/WishListRentData";
 
-
 function WishList() {
-    // Variables here
+    // Variables for State here - This State is used for managing if page's tab is 'sale' or not
     const [isSale, setIsSale] = useState(true);
 
     const handleOnSale = () => {
@@ -15,9 +14,51 @@ function WishList() {
     const handleOffSale = () => {
         setIsSale(false);
     };
+    //  Variables for sear feature
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchSaleResult, setSearchSaleResult] = useState([]);
+    const [searchRentResult, setSearchRentResult] = useState([]);
 
     // Functions here
+    useEffect(() => {
+        if (isSale) {
+            if (searchTerm.trim() !== '') {
+                const results = WishListSaleData.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
+                setSearchSaleResult(results);
+            }
+            else {            
+                setSearchSaleResult(WishListSaleData);
+            }
+        }
+        else {
+            if (searchTerm.trim() !== '') {
+                const results = WishListRentData.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
+                setSearchRentResult(results);
+            }
+            else {
+                setSearchRentResult(WishListRentData);
+            }
+        }        
+    }, [searchTerm, WishListSaleData, WishListRentData]);
 
+    const handleSearchInputChange = (event) => {
+        setSearchTerm(event.target.value);        
+    };
+
+    const handleSearchInputSubmit = (event) => {
+        event.preventDefault();
+        if (isSale) {
+            const results = WishListSaleData.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
+            setSearchSaleResult(results);            
+        }   
+        else {
+            const results = WishListRentData.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
+            setSearchRentResult(results);
+        }
+    };
+    
+    const items_sale = searchTerm ? searchSaleResult : WishListSaleData
+    const items_rent = searchTerm ? searchRentResult : WishListRentData
     // Render here
     return (
         <div className="py-3">
@@ -37,11 +78,15 @@ function WishList() {
                     </button>
                 </div>
                 <div className="flex items-center space-x-3 lg:w-1/2 lg:flex lg:justify-end">
-                    <input 
-                        type="text" 
-                        placeholder="   Tìm kiếm ..."
-                        className="border-2 rounded-lg lg:w-1/2"
-                    />
+                    <form onSubmit={handleSearchInputSubmit} className="lg:w-1/2">
+                        <input 
+                            type="text" 
+                            placeholder="   Tìm kiếm ..."
+                            className="border-2 rounded-lg w-full"
+                            value={searchTerm}
+                            onChange={handleSearchInputChange}
+                        />
+                    </form>                    
                     <button
                         className="p-4 hover:bg-red-500 hover:text-white"
                     >
@@ -53,7 +98,7 @@ function WishList() {
             <hr />
             {isSale? (
                 <div className="2xl:flex">
-                    {WishListSaleData.map((data) => (
+                    {items_sale.map((data) => (
                         <div className="flex justify-center">
                             <div className="md:w-2/3 lg:w-5/6">
                                 <PropertyCard
@@ -79,7 +124,7 @@ function WishList() {
                 </div>
             ) : (
                 <div className="2xl:flex">
-                    {WishListRentData.map((data) => (
+                    {items_rent.map((data) => (
                         <div className="flex justify-center">
                             <div className="md:w-2/3 lg:w-5/6">
                                 <PropertyCard

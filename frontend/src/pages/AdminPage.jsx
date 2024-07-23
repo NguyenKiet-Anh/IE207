@@ -110,6 +110,7 @@ function AdminPage() {
                         <input 
                             type="text" 
                             placeholder='   Tìm kiếm ...'
+                            className='w-full rounded-lg'
                             value={searchTerm}
                             onChange={handleSearchInputChange}
                         />

@@ -49,7 +49,7 @@ function Navbar() {
     
     // Return UI for navbar here
     return (
-        <nav className="sticky top-0 bg-white pb-5">
+        <nav id="navbar" className="sticky top-0 z-10 bg-white pb-5">
             {/* Navbar option list */}
             <div>
                 <ul className="grid grid-cols-10 gap-2 h-20">
@@ -108,8 +108,7 @@ function Navbar() {
                         <NavLink
                             to='/admin-page'
                             onClick={handleDeactiveButton}
-                            className="transition duration-800 border-b-4 border-transparent hover:border-black"
-                            onClick={handleInAdminPage}
+                            className="transition duration-800 border-b-4 border-transparent hover:border-black"                            
                         >   {/* Forum */}
                             <p>Quản trị viên</p>
                         </NavLink>

@@ -118,7 +118,7 @@ function AuthorViewer(){
                             </div>
                         </div>
                         {/* Show content here */}
-                        <div className="xl:flex">
+                        <div className="xl:flex xl:flex-wrap">
                             {CardDataForSale.map((card) => (                                
                                 <BrokerProperty
                                     id={card.id}
@@ -154,20 +154,20 @@ function AuthorViewer(){
                             </div>
                         </div>
                         {/* Show content here */}
-                        <div className="xl:flex">
-                        {CardDataForRent.map((card) => (                                
-                            <BrokerProperty
-                                id={card.id}
-                                img={card.img}
-                                price={card.price}
-                                address={card.address}
-                                bedroom={card.bedroom}
-                                bathroom={card.bathroom}
-                                author_img={card.author_img}
-                                author_name={card.author_name}
-                                update={card.update}
-                            >
-                            </BrokerProperty>
+                        <div className="xl:flex xl:flex-wrap">                            
+                        {CardDataForRent.map((card) => (      
+                                <BrokerProperty
+                                    id={card.id}
+                                    img={card.img}
+                                    price={card.price}
+                                    address={card.address}
+                                    bedroom={card.bedroom}
+                                    bathroom={card.bathroom}
+                                    author_img={card.author_img}
+                                    author_name={card.author_name}
+                                    update={card.update}
+                                >
+                                </BrokerProperty>                   
                         ))}
                     </div>
                             </>                            

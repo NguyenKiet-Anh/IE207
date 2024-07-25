@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PropertyInformation from '../components/layout/Content/Property/DetailedDisplay/PropertyInformation';
 import PropertyIntroduction from '../components/layout/Content/Property/DetailedDisplay/PropertyIntroduction';
-import RelativeProperty from "../components/layout/Content/Property/DetailedDisplay/RelativeProperty";
+import RelativeCarousel from "../components/layout/Content/Property/DetailedDisplay/RelativeProperty";
 
 import CardDataForSale from '../assets/EstateForSale/EstateForSaleCardData';
 import CardDataForRent from '../assets/EstateForRent/EstateForRentCardData';
@@ -35,7 +35,12 @@ const DetailedProperty = () => {
             }             
             getPropertyAsId();
         }, []);
-        
+    
+    const handleRelativeProperty = () => {
+        console.log(propertydata);
+        console.log(CardDataForSale);
+    };
+
     // Render here
     return (
             <Fragment>
@@ -49,8 +54,8 @@ const DetailedProperty = () => {
                 </div>
 
                 <div className='flex justify-center'> {/* for relative property */}
-                    <div className='w-full lg:w-2/3'>
-                        <RelativeProperty></RelativeProperty>
+                    <div className='w-full lg:w-5/6'>
+                        <RelativeCarousel></RelativeCarousel>
                     </div>
                 </div>
             </Fragment>

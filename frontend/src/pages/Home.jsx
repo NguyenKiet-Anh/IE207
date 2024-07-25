@@ -3,9 +3,10 @@ import FindPriceIcon from "../images/background-image/find-price.png";
 import InterestRateIcon from "../images/background-image/interest rate.png";
 import NearLocationIcon from "../images/background-image/near-location.png";
 
+
 import Carousel from "../components/layout/Content/Home/Carousel";
-import SmallPropertyCard from "../components/layout/Content/Property/SmallPropertyCard";
-import CardDataForSale from "../assets/EstateForSale/EstateForSaleCardData";
+import NewCarousel from "../components/layout/Content/Home/NewCarousel";
+import HotCarousel from "../components/layout/Content/Home/HotCarousel";
 
 function Home() {
 
@@ -22,7 +23,7 @@ function Home() {
             img: NearLocationIcon,
             feature_name: "Tìm kiếm gần địa điểm"
         },
-    ]
+    ];    
 
     return (
         <div>
@@ -38,35 +39,11 @@ function Home() {
                     </div>
 
                     <div className="py-5">
-                        <p className="font-bold text-lg">Nhà đang hot</p>
-                        <p>Làm sau - áp dụng machine learning vào</p>
+                        <HotCarousel></HotCarousel>
                     </div>
 
-                    <div className="py-5">
-                        <p className="font-bold text-lg">Nhà đất mới đăng</p>
-                        <div className="flex flex-wrap gap-2">
-                            {CardDataForSale.map((card) => (
-                                <SmallPropertyCard
-                                    kind={card.kind}
-                                    id={card.id}
-                                    img={card.img}
-                                    title={card.title}
-                                    about={card.about}
-                                    price={card.price}
-                                    address={card.address}
-                                    area={card.area}
-                                    bedroom={card.bedroom}
-                                    bathroom={card.bathroom}
-                                    furniture={card.furniture}
-                                    policy={card.policy}
-                                    author_img={card.author_img}
-                                    author_name={card.author_name}
-                                    update={card.update}
-                                    phone={card.phone}
-                                    map={card.map}
-                                ></SmallPropertyCard>
-                            ))}                
-                        </div>                                
+                    <div>
+                        <NewCarousel></NewCarousel>
                     </div>
 
                     <div className="py-5">

@@ -1,9 +1,10 @@
 import BedIcon from "../../../../images/icons/bed.png";
 import BathIcon from "../../../../images/icons/bath.png";
+import { Link } from "react-router-dom";
 
 const SmallPropertyCard = (property) => {
     return (
-        <div className='pb-10 pt-2 xl:w-1/2'>
+        <div className='pb-10 pt-2'>
             <div className="mx-2 border">
                 <div className="h-56 md:h-64 flex justify-center">
                     <img 
@@ -26,7 +27,7 @@ const SmallPropertyCard = (property) => {
                                 />
                             </div>
                             <p className='font-bold text-center py-2'>{property.author_name}</p>
-                            <p className='text-center'>{property.update}</p>
+                            <p className='text-center line-clamp-2'>{property.update}</p>
                         </div>
                     </div>
 
@@ -43,6 +44,27 @@ const SmallPropertyCard = (property) => {
                             </div>  
                         </div>                  
                         <p className='font-bold text-xl text-center text-red-500 py-3'>{property.price}</p>
+                            {property.kind === 0? (
+                                <Link
+                                    to={`/detailed-property/sale/${property.id}/${property.kind}`}
+                                >
+                                    <div                             
+                                        className='text-sm lg:text-md xl:text-lg text-red-500 font-bold underline'
+                                    > { /* Send id to the router link - then load data as the received id */ }
+                                        <p className="text-red-500 underline text-center">Xem chi tiết &gt;</p>
+                                    </div>
+                                </Link>
+                            ) : (
+                                <Link
+                                    to={`/detailed-property/rent/${property.id}/${property.kind}`}
+                                >
+                                    <div                             
+                                        className='text-sm lg:text-md xl:text-lg text-red-500 font-bold underline'
+                                    > { /* Send id to the router link - then load data as the received id */ }
+                                        <p className="text-red-500 underline text-center">Xem chi tiết &gt;</p>
+                                    </div>
+                                </Link>
+                            )}
                     </div>
                 </div>
             </div>

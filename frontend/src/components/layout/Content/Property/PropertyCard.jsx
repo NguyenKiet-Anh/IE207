@@ -20,7 +20,7 @@ const PropertyCard = (props) => {
     
     // Render here
     return (
-        <div className="flex flex-wrap rounded-lg my-6 bg-slate-200 shadow-lg">
+        <div className="flex flex-wrap rounded-lg my-6 border shadow-lg">
             <div className="w-1/3">
                 <img 
                     src={props.img}
@@ -128,7 +128,7 @@ const PropertyCard = (props) => {
                         <p className='text-md lg:text-lg'>{props.furniture}</p>
                     </div>
 
-                    <div className='flex gap-1 lg:gap-2 items-center justify-start'>
+                    <div className='flex gap-1 lg:gap-2 items-center justify-start mr-2'>
                         <img 
                             src={policyIcon} 
                             alt="Icon pháp lý" 

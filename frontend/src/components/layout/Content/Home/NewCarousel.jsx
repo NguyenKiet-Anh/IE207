@@ -4,11 +4,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import SmallPropertyCard from "../SmallPropertyCard";
+import SmallPropertyCard from "../Property/SmallPropertyCard";
 
-import CardDataForSale from "../../../../../assets/EstateForSale/EstateForSaleCardData";
+import CardDataForSale from "../../../../assets/EstateForSale/EstateForSaleCardData";
 
-const RelativeCarousel = () => {
+const NewCarousel = () => {
     var slider_settings = {
         dots: true,
         infinite: true,
@@ -46,7 +46,7 @@ const RelativeCarousel = () => {
 
     return (
         <div className="py-5 relative">
-            <p className="font-bold text-lg">Nhà đất tương tự</p>
+            <p className="font-bold text-lg">Nhà đất mới đăng</p>
             <Slider ref={arrowRef} {...slider_settings}>                            
                     {CardDataForSale.map((card) => (
                         <SmallPropertyCard
@@ -92,4 +92,4 @@ const RelativeCarousel = () => {
 
     );
 };
-export default RelativeCarousel;
+export default NewCarousel;

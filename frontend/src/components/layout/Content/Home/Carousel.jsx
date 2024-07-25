@@ -13,10 +13,7 @@ function Carousel() {
         infinite: true,
         speed: 500,
         slidesToShow: 1,
-        slidesToScroll: 1,
-        reponsive: [
-
-        ]
+        slidesToScroll: 1
     }
     const arrowRef = useRef(null);
     return (

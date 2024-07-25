@@ -48,8 +48,8 @@ function Home() {
 
                     <div className="py-5">
                         <p className="font-bold text-lg">Tin nổi bật</p>    
-                        <div className="flex flex-wrap lg:justify-center lg:space-x-20">
-                            <div className="w-1/2 lg:w-1/3 space-y-2">
+                        <div className="flex flex-wrap lg:space-x-20">
+                            <div className="w-1/2 lg:w-1/3 space-y-2 lg:space-y-6">
                                 <img 
                                     src={newsSelected.img} 
                                     alt="Hình ảnh cho tin tức" 
@@ -62,9 +62,11 @@ function Home() {
                                 <div className="space-y-4 ml-3 lg:space-y-6 2xl:space-y-10">
                                     {NewsListData.slice(0, 8).map((news, index) => (
                                         <SpecialNews
-                                            key={index}
-                                            author={news.author}
+                                            key={index}                                                                                        
                                             title={news.title}
+                                            author={news.author}
+                                            date={news.date}
+                                            hour={news.hour}
                                             onNewsClick = {() => handleChangeNews(news)}
                                         ></SpecialNews>
                                     ))}

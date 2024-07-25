@@ -4,9 +4,9 @@ const SpecialNews = (props) => {
         props.onNewsClick();
     }
     return (
-        <div onClick={onClick} className="flex gap-2">
+        <div onClick={onClick} className="flex flex-wrap gap-2">            
             <p className="hover:underline cursor-pointer line-clamp-1 lg:text-lg">{props.title}</p>
-            <p className="italic lg:text-lg line-clamp-1">- {props.author}</p>
+            <p className="italic lg:text-lg line-clamp-1">- {props.author}</p>            
         </div>
     );
 };

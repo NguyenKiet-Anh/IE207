@@ -121,6 +121,7 @@ function AuthorViewer(){
                         <div className="xl:flex xl:flex-wrap">
                             {CardDataForSale.map((card) => (                                
                                 <BrokerProperty
+                                    kind={card.kind}
                                     id={card.id}
                                     img={card.img}
                                     price={card.price}
@@ -157,6 +158,7 @@ function AuthorViewer(){
                         <div className="xl:flex xl:flex-wrap">                            
                         {CardDataForRent.map((card) => (      
                                 <BrokerProperty
+                                    kind={card.kind}
                                     id={card.id}
                                     img={card.img}
                                     price={card.price}

@@ -46,7 +46,7 @@ const RelativeCarousel = () => {
 
     return (
         <div className="py-5 relative">
-            <p className="font-bold text-lg">Nhà đất tương tự</p>
+            <p className="font-bold text-lg">Có thể bạn quan tâm</p>
             <Slider ref={arrowRef} {...slider_settings}>                            
                     {CardDataForSale.map((card) => (
                         <SmallPropertyCard

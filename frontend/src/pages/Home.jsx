@@ -3,10 +3,15 @@ import FindPriceIcon from "../images/background-image/find-price.png";
 import InterestRateIcon from "../images/background-image/interest rate.png";
 import NearLocationIcon from "../images/background-image/near-location.png";
 
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 import Carousel from "../components/layout/Content/Home/Carousel";
+import SpecialNews from "../components/layout/Content/Home/SpecialNews";
 import NewCarousel from "../components/layout/Content/Home/NewCarousel";
 import HotCarousel from "../components/layout/Content/Home/HotCarousel";
+
+import NewsListData from "../assets/News/NewsListData";
 
 function Home() {
 
@@ -25,6 +30,14 @@ function Home() {
         },
     ];    
 
+    // Variables for changing news
+    const [newsSelected, setNewsSelected] = useState({});
+    // Functions for changing news in news list
+    const handleChangeNews = (news) => {
+        setNewsSelected(news);
+    };
+
+    // render return here
     return (
         <div>
             <div className="pt-5 pb-10">
@@ -34,8 +47,35 @@ function Home() {
                 <div className="w-5/6">
 
                     <div className="py-5">
-                        <p className="font-bold text-lg">Tin nổi bật</p>
-                        <p>Làm sau</p>
+                        <p className="font-bold text-lg">Tin nổi bật</p>    
+                        <div className="flex flex-wrap lg:justify-center lg:space-x-20">
+                            <div className="w-1/2 lg:w-1/3 space-y-2">
+                                <img 
+                                    src={newsSelected.img} 
+                                    alt="Hình ảnh cho tin tức" 
+                                    className="rounded"                                   
+                                />
+                                <p className="font-bold line-clamp-1 lg:text-lg">{newsSelected.author}</p>
+                                <p className="text-sm line-clamp-1 lg:text-md">{newsSelected.date} - {newsSelected.hour}</p>
+                            </div>
+                            <div className="w-1/2 lg:w-1/3">                               
+                                <div className="space-y-4 ml-3 lg:space-y-6 2xl:space-y-10">
+                                    {NewsListData.slice(0, 8).map((news, index) => (
+                                        <SpecialNews
+                                            key={index}
+                                            author={news.author}
+                                            title={news.title}
+                                            onNewsClick = {() => handleChangeNews(news)}
+                                        ></SpecialNews>
+                                    ))}
+                                    <Link
+                                        to="/news"
+                                    >
+                                        <p className="py-4 underline italic text-red-500 font-bold">Xem thêm</p>
+                                    </Link>                     
+                                </div>
+                            </div>
+                        </div>                        
                     </div>
 
                     <div className="py-5">

@@ -35,11 +35,6 @@ const DetailedProperty = () => {
             }             
             getPropertyAsId();
         }, []);
-    
-    const handleRelativeProperty = () => {
-        console.log(propertydata);
-        console.log(CardDataForSale);
-    };
 
     // Render here
     return (

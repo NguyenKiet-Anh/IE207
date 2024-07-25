@@ -18,9 +18,12 @@ const PropertyCard = (props) => {
     const { isWishListActived } = ActiveButton();
     const { isInAdminPage } = useAdmin();
     
+    const handleClick = () => {
+        props.onCardClick();
+    }
     // Render here
     return (
-        <div className="flex flex-wrap rounded-lg my-6 border shadow-lg">
+        <div className="flex flex-wrap rounded-lg my-6 border shadow-lg" onClick={handleClick}>
             <div className="w-1/3">
                 <img 
                     src={props.img}

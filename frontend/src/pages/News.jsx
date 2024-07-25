@@ -65,7 +65,7 @@ function News() {
                         <div className="flex flex-wrap">
                             <div className="w-2/3">
                                 <p className="ml-10 font-bold text-2xl">Tin tức</p>
-                                { items.map((newslist) => (
+                                { items.slice(0, 10).map((newslist) => (
                                     <NewsList
                                         id = {newslist.id}
                                         img = {newslist.img}

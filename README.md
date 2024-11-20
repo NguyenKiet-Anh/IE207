@@ -15,23 +15,7 @@ In this project, we try to create a end-to-end website for displaying house's pr
 ## Prediction System
 ## Webapp
 ## Technologies stack
-  <ul>
-    <li>
-      <i>Authentication</i> 
-      <ul>
-        <li>
-          JWT
-        </li>
-      </ul>
-    </li>
-    <li>
-      <i>Mail Sender</i> 
-      <ul>
-        <li>
-          SMTPLib
-        </li>
-      </ul>
-    </li>    
+  <ul>    
     <li>
       <i>Web Deployment</i>
       <ul>

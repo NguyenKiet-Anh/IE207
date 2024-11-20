@@ -2,10 +2,10 @@
 We are a two-person team, included:
   <ul>
     <li>
-      Nguyễn Anh Kiệt
+      Nguyễn Anh Kiệt - 21522822
     </li>
     <li>
-      Đào Nguyên Nhật Minh
+      Đào Nguyên Nhật Minh - 21522824
     </li>
   </ul>
   
@@ -23,13 +23,13 @@ In this project, we try to create a end-to-end website for displaying house's pr
           DBMS: PostgreSQL
         </li>
         <li>
-          Backend Framework: Django
+          Backend Framework: Django          
         </li>
         <li>
-          Frontend Framework: ReactJs
+          Frontend Framework: ReactJs          
         </li>
         <li>
-            CSS Framework: TailwindCSS
+          CSS Framework: TailwindCSS
         </li>
       </ul>
     </li>

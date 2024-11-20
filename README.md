@@ -10,7 +10,7 @@ We are a two-person team, included:
   </ul>
   
 # About this project
-In this project, we try to create a end-to-end website for displaying house's price among HCM City districts (added ML features).
+In this project, we try to create a end-to-end website for displaying house's price among HCM City districts.
 
 ## Recommender System
 ## Prediction System

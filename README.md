@@ -35,9 +35,7 @@ In this project, we try to create a end-to-end website for displaying house's pr
       <i>Webapp Deployment</i>
       <ul>
         <li>
-          <li>
             Self-hosting: Ngnix          
-          </li>
         </li>              
       </ul>
     </li>

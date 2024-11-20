@@ -20,16 +20,16 @@ In this project, we try to create a end-to-end website for displaying house's pr
       <i>Web Deployment</i>
       <ul>
         <li>
-          PostgreSQL
+          DBMS: PostgreSQL
         </li>
         <li>
-          Django/ Fast API
+          Backend Framework: Django
         </li>
         <li>
-          ReactJs
+          Frontend Framework: ReactJs
         </li>
         <li>
-            TailwindCSS
+            CSS Framework: TailwindCSS
         </li>
       </ul>
     </li>

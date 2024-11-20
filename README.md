@@ -17,17 +17,6 @@ In this project, we try to create a end-to-end website for displaying house's pr
 ## Technologies stack
   <ul>
     <li>
-      <i>Testing</i> 
-      <ul>
-        <li>
-          Selenium
-        </li>
-        <li>
-          Postman
-        </li>
-      </ul>
-    </li>
-    <li>
       <i>Authentication</i> 
       <ul>
         <li>

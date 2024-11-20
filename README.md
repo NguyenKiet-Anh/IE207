@@ -42,21 +42,7 @@ In this project, we try to create a end-to-end website for displaying house's pr
           SMTPLib
         </li>
       </ul>
-    </li>
-    <li>
-      <i>ML Features</i>
-      <ul>
-        <li>
-            Pandas, Spark
-        </li>
-        <li>
-            Scikit-Learn, SparkMLLib
-        </li>
-        <li>
-            Matplotlib, Seaborn, Plotly
-        </li>
-      </ul>
-    </li>
+    </li>    
     <li>
       <i>Web Deployment</i>
       <ul>

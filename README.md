@@ -15,7 +15,7 @@ In this project, we try to create a end-to-end website for displaying house's pr
 ## Technologies stack
   <ul>    
     <li>
-      <i>Web Deployment</i>
+      <i>Webapp Development</i>
       <ul>
         <li>
           DBMS: PostgreSQL
